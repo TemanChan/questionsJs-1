@@ -7,10 +7,11 @@
  * - exposes the model to the template and provides event handlers
  */
 todomvc.controller('TodoCtrl', function TodoCtrl($scope, $location, $firebaseArray, $sce) {
-	var url = 'https://vecho.firebaseio.com/echo';
-	var echoRef = new Firebase(url);
+    var url = 'https://vecho.firebaseio.com/echo';
+    
+    var echoRef = new Firebase(url);
 
-  var maxEcho = 10000000000; // enough to put me in the #1 position!
+    var maxEcho = 10000000000; // enough to put me in the #1 position!
 
 	// Bind the todos to the firebase provider.
 	//$scope.todos = $firebaseArray(fireRef);
