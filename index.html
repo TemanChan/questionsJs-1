@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" ng-app="todomvc" data-framework="firebase">
+	<head>
+		<meta charset="utf-8">
+		<title>Let's Echo</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+		<!-- need this for comlted ones. TODO: can I do this in bootstrap -->
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+
+	</head>
+	<body ng-controller="TodoCtrl">
+		  <font size="10">Echo Now</font>&nbsp;
+		  <a ng-class="{selected: location.path() == '/'}" class="btn btn-default" href="#/">Main</a>
+		  <a ng-class="{selected: location.path() == '/newechos'}" class="btn btn-primary" href="#/newechos">New Echos</a>
+	    <a ng-class="{selected: location.path() == '/tags'}" class="btn btn-success" href="#/tags">Tags</a>
+			<a ng-class="{selected: location.path() == '/users'}" class="btn btn-info" href="#/users">Users</a>
+      <a ng-class="{selected: location.path() == '/about'}" class="btn btn-warning" href="#/about">About</a>
+
+        <div class="input-group">
+					<!--
+					<form id="todo-form" ng-submit="addTodo()">
+					-->
+          <textarea type="text" id="new-todo" class="form-control"
+					placeholder="What would you say? [Title CR Description]" ng-model="newTodo" autofocus></textarea>
+          <span class="input-group-btn">
+          <button class="btn btn-default" type="button" ng-click="addTodo()">Post</button>
+         </span>
+      </div><!-- /input-group -->
+
+<!--
+menu
+-->
+
+								<!--
+                 <span class="label label-danger">Danger</span>
+							-->
+				<div class="list-group" id="todo-list">
+					<span class="list-group-item" ng-repeat="(id, todo) in todos | todoFilter" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
+						<h4 class="list-group-item-heading">
+							<span class="badge">{{todo.echo}}</span>
+							<span ng-class="{completed: todo.completed}">{{todo.head}}</span>
+						</h4>
+            <p class="list-group-item-text"><span ng-bind-html="todo.trustedDesc"></span> created: {{todo.dateString}}
+						<span ng-show="todo.tags">tags: {{todo.tags}}</span></p>
+
+						<button  class="btn btn-default btn-xs glyphicon glyphicon-hand-up" ng-click="addEcho(todo)">Echo</button>
+						<button  class="btn btn-default btn-xs glyphicon glyphicon-check" ng-click="toggleCompleted(todo)">Toggle Completed</button>
+						&nbsp;
+						<button class="btn btn-default btn-xs glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeTodo(todo)">Del</button>
+					</span>
+				</div>
+
+
+		<!--
+			<footer id="footer" ng-show="totalCount" ng-cloak>
+				<span id="todo-count"><strong>{{remainingCount}}</strong>
+					<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+				</span>
+				<ul id="filters">
+					<li>
+						<a ng-class="{selected: location.path() == '/'} " href="#/">All</a>
+					</li>
+					<li>
+						<a ng-class="{selected: location.path() == '/active'}" href="#/active">Active</a>
+					</li>
+					<li>
+						<a ng-class="{selected: location.path() == '/completed'}" href="#/completed">Completed</a>
+					</li>
+				</ul>
+				<button id="clear-completed" ng-click="clearCompletedTodos()" ng-show="completedCount">Clear completed</button>
+			</footer>
+		</section>
+		<footer id="info">
+			<p>Double-click to edit a todo</p>
+			<p>Credits:
+				<a href="http://twitter.com/cburgdorf">Christoph Burgdorf</a>,
+				<a href="http://ericbidelman.com">Eric Bidelman</a>,
+				<a href="http://twitter.com/_davideast">David East</a>,
+				<a href="http://jacobmumm.com">Jacob Mumm</a> and
+				<a href="http://igorminar.com">Igor Minar</a>
+			</p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+	-->
+
+	<!-- Autolink from https://github.com/gregjacobs/Autolinker.js> -->
+	  <script src="js/autolink/Autolinker.js"></script>
+
+		<script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
+		<script src="node_modules/angular/angular.js"></script>
+		<script src="node_modules/angularfire/dist/angularfire.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/controllers/todoCtrl.js"></script>
+		<script src="js/directives/todoFocus.js"></script>
+		<script src="js/directives/todoBlur.js"></script>
+		<script src="js/directives/todoEscape.js"></script>
+	</body>
+</html>
