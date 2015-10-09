@@ -1,0 +1,34 @@
+'use strict';
+
+describe('directive Testing', function() {
+    var compile, scope;
+
+    beforeEach(module('todomvc'));
+    
+    beforeEach(inject(function($compile,$rootScope) {
+	compile = $compile;
+	scope = $rootScope.$new();
+	//scope.escapeCallback = jasmine.createSpy('escapeCallback');
+    }));
+    
+    it('todoEscape', function() {
+	var element = compile('<todo-blur todo-escape="t=1"></todo-blur>')(scope);
+	var e = $.Event("keydown");
+	scope.t = 0;
+	e.keyCode = 123;
+	element.trigger(e);
+	expect(scope.t).toBe(0);
+	e.keyCode = 27;
+	element.trigger(e);
+	expect(scope.t).toBe(1);
+    });
+    
+    it('todoFocus', function() {
+	var element = compile('<todo-blur todo-focus="tmp"></todo-blur>')(scope);
+	scope.tmp = false;
+	element.scope().$apply();
+	scope.tmp = true;
+	element.scope().$apply();
+    });
+
+});
