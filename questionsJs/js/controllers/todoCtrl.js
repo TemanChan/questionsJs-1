@@ -118,7 +118,8 @@ $scope.addTodo = function () {
 		completed: false,
 		timestamp: new Date().getTime(),
 		tags: "...",
-		echo: 0,
+	        echo: 0,
+ 	        hate: 0,
 		order: 0
 	});
 	// remove the posted question in the input
@@ -134,12 +135,24 @@ $scope.addEcho = function (todo) {
 	$scope.editedTodo = todo;
 	todo.echo = todo.echo + 1;
 	// Hack to order using this order.
-	todo.order = todo.order -1;
+        todo.order = todo.order -1;
 	$scope.todos.$save(todo);
 
 	// Disable the button
 	$scope.$storage[todo.$id] = "echoed";
 };
+
+$scope.addHate = function (todo) {
+	$scope.editedTodo = todo;
+	todo.hate = todo.hate + 1;
+	// Hack to order using this order.
+	todo.order = todo.order + 1;
+	$scope.todos.$save(todo);
+
+	// Disable the button
+	$scope.$storage[todo.$id] = "echoed";
+};
+
 
 $scope.doneEditing = function (todo) {
 	$scope.editedTodo = null;
