@@ -35,6 +35,22 @@ describe('controllers unit test', function(){
     });
     var results = scope.getFirstAndRestSentence("Hello? This is Sung");
     expect(results[0]).toEqual('Hello?');
+        var testInputs = [
+          {str:"Hello? This is Sung", exp: "Hello?"},
+          {str:"Hello.co? This is Sung", exp: "Hello."},
+          {str:"Hello.co This is Sung", exp: "Hello."},
+          {str:"Hello.co \nThis is Sung", exp: "Hello."},
+          {str:"Hello. Hi? This is Sung", exp: "Hello."},
+          {str:"Hello? Hi. This is Sung", exp: "Hello?"},
+          {str:"Hello?? This is Sung", exp: "Hello?"},
+	  {str:"Hello", exp: "Hello"},
+        ];
+
+        for (var i in testInputs) {
+          var results = scope.getFirstAndRestSentence(testInputs[i].str);
+          expect(results[0]).toEqual(testInputs[i].exp);
+        }
+
   }));
 
 });

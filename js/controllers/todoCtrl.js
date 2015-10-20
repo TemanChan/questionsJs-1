@@ -43,13 +43,29 @@ var query = echoRef.orderByChild("order");
 //.limitToFirst(1000);
 $scope.todos = $firebaseArray(query);
 
-//$scope.input.wholeMsg = '';
+    $scope.input = {wholeMsg : ''};
 $scope.editedTodo = null;
 
+    Date.prototype.dateDiff = function(interval,now) 
+    { 
+	var t = now.getTime() - this.getTime();
+	var i = {};
+		
+    	i['d']=Math.floor(t/86400000);
+	t = t % 86400000;
+    	i['h']=Math.floor(t/3600000);
+	t = t % 3600000;
+    	i['m']=Math.floor(t/60000);
+	t = t % 60000;
+    	i['s']=Math.floor(t/1000);
+    	return i[interval]; 
+    }
+        
 // pre-precessing for collection
 $scope.$watchCollection('todos', function () {
 	var total = 0;
-	var remaining = 0;
+    var remaining = 0;
+    var now = new Date();
 	$scope.todos.forEach(function (todo) {
 		// Skip invalid entries so they don't break the entire app.
 		if (!todo || !todo.head ) {
@@ -61,11 +77,59 @@ $scope.$watchCollection('todos', function () {
 			remaining++;
 		}
 
-		// set time
-		todo.dateString = new Date(todo.timestamp).toString();
-		todo.tags = todo.wholeMsg.match(/#\w+/g);
+	    // set time
 
-		todo.trustedDesc = $sce.trustAsHtml(todo.linkedDesc);
+	    var postDate = new Date(todo.timestamp);
+	    var d = postDate.dateDiff('d',now);
+	    var h = postDate.dateDiff('h',now);
+	    var m = postDate.dateDiff('m',now);
+	    var s = postDate.dateDiff('s',now);
+	    var dateString="";
+	    if (d != 0) {
+		dateString+=d;
+		if (d == 1) {
+		    dateString +=" day ";
+		} else  {
+		    dateString +=" days ";
+		}
+		if (h == 0) {
+		    dateString +=" ago";
+		} else if (m==1) {
+		    dateString +="1 hour ago";
+		} else {
+		    dateString +=h+" hours ago";
+		}
+	    } else {
+		if (h == 0) {
+		} else if (h == 1) {
+		    dateString = "1 hour "
+		} else {
+		    dateString = h + " hours "
+		}
+
+		if (m == 0) {
+		} else if (m == 1) {
+		    dateString += "1 minute ";
+		} else {
+		    dateString += m+" minutes ";
+		}
+		
+		if (s == 1) {
+		    dateString += "1 second ago";
+		} else {
+		    dateString += s+" seconds ago";
+		}
+	    };
+	    todo.dateString = dateString;
+		todo.tags = todo.wholeMsg.match(/#\w+/g);
+	    todo.splitMsg=todo.wholeMsg.split(/(#\w+)/g);
+	    todo.displayMsg = [];
+	    for (var i in todo.splitMsg){
+		if (todo.splitMsg[i][0] != '#') todo.displayMsg.push($sce.trustAsHtml('<plaintext>'+todo.splitMsg[i]));
+		else todo.displayMsg.push($sce.trustAsHtml('<a href="">' + todo.splitMsg[i] + '</a>'));
+	    }
+	    todo.trustedDesc = $sce.trustAsHtml(todo.linkedDesc);
+	
 	});
 
 	$scope.totalCount = total;
@@ -75,6 +139,11 @@ $scope.$watchCollection('todos', function () {
 	$scope.absurl = $location.absUrl();
 }, true);
 
+    $scope.editInput = function($string) {
+	if ($string.length >= 11 && $string.toString().slice(0,11) == '<plaintext>') return;
+	$scope.input.wholeMsg = $string.toString().match(/#\w+/g)[0];
+    };
+    
 // Get the first sentence and rest
 $scope.getFirstAndRestSentence = function($string) {
 	var head = $string;
@@ -114,11 +183,12 @@ $scope.addTodo = function () {
 		head: head,
 		headLastChar: head.slice(-1),
 		desc: desc,
-		linkedDesc: Autolinker.link(desc, {newWindow: false, stripPrefix: false}),
+	    linkedDesc: Autolinker.link(desc, {newWindow: false, stripPrefix: false}),
 		completed: false,
 		timestamp: new Date().getTime(),
 		tags: "...",
-		echo: 0,
+	        echo: 0,
+ 	        hate: 0,
 		order: 0
 	});
 	// remove the posted question in the input
@@ -134,16 +204,16 @@ $scope.addEcho = function (todo) {
 	$scope.editedTodo = todo;
 	todo.echo = todo.echo + 1;
 	// Hack to order using this order.
-	todo.order = todo.order -1;
+        todo.order = todo.order -1;
 	$scope.todos.$save(todo);
 
 	// Disable the button
 	$scope.$storage[todo.$id] = "echoed";
 };
 
-$scope.minusEcho = function (todo) {
+$scope.addHate = function (todo) {
 	$scope.editedTodo = todo;
-	todo.echo = todo.echo - 1;
+	todo.hate = todo.hate + 1;
 	// Hack to order using this order.
 	todo.order = todo.order + 1;
 	$scope.todos.$save(todo);

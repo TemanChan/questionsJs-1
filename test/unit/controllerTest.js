@@ -41,6 +41,71 @@ describe('TodoCtrl', function() {
     }));
 
     describe('TodoCtrl Testing', function() {
+      var testTodo = {
+	  wholeMsg: "Test. ",
+	  head: "Test. ",
+	  headLastChar: '.',
+	  desc: '',
+	  linkedDesc: Autolinker.link(''  , {newWindow: false, stripPrefix: false}),
+	  completed: true,
+	  timestamp: new Date().getTime()-60001,
+	  tags: "...",
+	  echo: 0,
+	  order: 0
+      };
+
+      var testTodo3 = {
+	  wholeMsg: "Test! #hash",
+	  head: "Test! ",
+	  headLastChar: '!',
+	  desc: '#hash',
+	  linkedDesc: Autolinker.link(''  , {newWindow: false, stripPrefix: false}),
+	  completed: false,
+	  timestamp: new Date().getTime()-100000000,
+	  tags: "...",
+	  echo: 0,
+	  order: 0
+      };
+
+      var testTodo2 = {
+	  wholeMsg: ''      ,
+	  head: ''      ,
+	  headLastChar: '' ,
+	  desc: '',
+	  linkedDesc: Autolinker.link(''  , {newWindow: false, stripPrefix: false}),
+	  completed: false,
+	  timestamp: new Date().getTime()-3600001,
+	  tags: "...",
+	  echo: 0,
+	  order: 0
+      };
+
+      var todos = {
+	  forEach: function(foo) {
+	      foo(testTodo);
+	      foo(testTodo2);
+	      foo(testTodo3);
+	  }
+      }
+	
+
+
+      it('watchCollection Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+
+	  scope.todos = todos;
+	  scope.$digest();
+	  
+      });
+
       it('setFirstAndRestSentence', function() {
         var ctrl = controller('TodoCtrl', {
           $scope: scope
@@ -51,7 +116,8 @@ describe('TodoCtrl', function() {
           {str:"Hello.co? This is Sung", exp: "Hello.co?"},
           {str:"Hello.co This is Sung", exp: "Hello.co This is Sung"},
           {str:"Hello.co \nThis is Sung", exp: "Hello.co \n"},
-
+          {str:"Hello. Hi? This is Sung", exp: "Hello."},
+          {str:"Hello? Hi. This is Sung", exp: "Hello?"},
           {str:"Hello?? This is Sung", exp: "Hello??"},
         ];
 
@@ -60,6 +126,120 @@ describe('TodoCtrl', function() {
           expect(results[0]).toEqual(testInputs[i].exp);
         }
       });
+
+
+      it('addTodo Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+
+	scope.input = {wholeMsg : "test"};
+	scope.addTodo();
+	expect(scope.input.wholeMsg).toBe('');
+	scope.addTodo();
+	expect(scope.input.wholeMsg).toBe('');
+      });
+
+      it('editTodo Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+
+        expect(scope.editTodo(testTodo)).toBe(undefined);
+      });
+
+	it('editInput Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+
+	    scope.input = {wholeMsg: ""};
+	    var str = "<plaintext>abc".toString();
+	    scope.editInput(str);
+            expect(scope.input.wholeMsg).toEqual("");
+	    str = "#abc".toString();
+	    scope.editInput(str);
+	    expect(scope.input.wholeMsg).toEqual("#abc");
+	    
+      });
+
+      it('inscreaseMax Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+	scope.maxQuestion = 10;
+	scope.totalCount = 11;
+	expect(scope.increaseMax()).toBe(undefined);
+	scope.maxQuestion = 11;
+        expect(scope.increaseMax()).toBe(undefined);
+      });
+
+      it('doneEditing Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+	expect(scope.doneEditing(testTodo)).toBe(undefined);
+	expect(scope.doneEditing(testTodo2)).toBe(undefined);
+      });
+
+      it('editTodo Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+
+        expect(scope.editTodo(testTodo)).toBe(undefined);
+      });
+
+      it('revertEditing Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+	scope.originalTodo = {wholeMsg: "test"};
+        expect(scope.revertEditing(testTodo)).toBe(undefined);
+      });
+
 
       it('RoomId', function() {
         location.path('/new/path');
