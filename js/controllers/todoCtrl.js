@@ -93,21 +93,84 @@ $scope.getQYTime = function(postTime) {
 
 	if (m == 0) {
 	} else if (m == 1) {
-	    dateString += "1 minute ";
+	    dateString += "1 minute ago";
 	} else {
-	    dateString += m+" minutes ";
-	}
-	
-	if (s == 1) {
-	    dateString += "1 second ago";
-	} else {
-	    dateString += s+" seconds ago";
+	    dateString += m+" minutes ago";
 	}
     }
-    if (dateString == '0 seconds ago') return 'just now';
+    if (dateString == '') return 'just now';
     return dateString;
 };	
 
+$scope.trInput = {
+    from: {
+	name: 'from',
+	value: -5000000000000
+    },
+    to: {
+	name: 'to',
+	value: 5000000000000
+    }
+};
+
+$scope.trOptions = [
+    {
+	name: 'now',
+	value: 5000000000000
+    },
+    {
+	name: '1 hour ago',
+	value: -3600000
+    },
+    {
+	name: '2 hours ago',
+	value: -7200000
+    },
+    {
+	name: '1 day ago',
+	value: -24*3600000
+    },
+    {
+	name: '1 week ago',
+	value: -7*24*3600000
+    },
+    {
+	name: '30 days ago',
+	value: -30*24*3600000
+    },
+    {
+	name: '365 days ago',
+	value: -365*24*3600000
+    },
+    {
+	name: 'the start',
+	value: -5000000000000
+    }
+];
+
+$scope.getPreMsg = function($string) {
+    var preMsg = "<pre>";
+    var inHashtag = false;
+    for (var i = 0; i < $string.length; ++i) {
+	var ch = $string.charAt(i);
+	if (ch == '<') {
+	    preMsg+="&lt;";
+	} else if (ch == '>') {
+	    preMsg+="&gt;";
+	} else if (ch == '\"') {
+	    preMsg+="&quot;";
+	} else if (ch == '#' && !inHashtag) {
+	    inHashtag = true;
+	    preMsg+="<strong>"+ch;
+	} else if (inHashtag && (ch == ' ' || ch == '\n')) {
+	    inHashtag = false;
+	    preMsg+="</strong>"+ch;
+	} else {
+	    preMsg+=ch;
+	}
+    }
+    return preMsg;
+};
     
 // pre-precessing for collection
 $scope.$watchCollection('todos', function () {
@@ -134,7 +197,8 @@ $scope.$watchCollection('todos', function () {
 		if (todo.splitMsg[i][0] != '#') todo.displayMsg.push($sce.trustAsHtml('<plaintext>'+todo.splitMsg[i]));
 		else todo.displayMsg.push($sce.trustAsHtml('<a href="">' + todo.splitMsg[i] + '</a>'));
 	    }
-	    todo.trustedDesc = $sce.trustAsHtml(todo.linkedDesc);
+	    todo.preMsg = $scope.getPreMsg(todo.desc);
+	    todo.trustedDesc = $sce.trustAsHtml(todo.preMsg);
 	});
 
 	$scope.totalCount = total;
@@ -207,7 +271,7 @@ $scope.addReply = function (todo) {
         var now = new Date();
         todo.reply.push([todo.new_reply,now.getTime()]);
         todo.new_reply = '';
-        $scope.todos.save(todo);
+        $scope.todos.$save(todo);
 };
 
 $scope.editTodo = function (todo) {
