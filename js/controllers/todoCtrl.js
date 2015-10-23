@@ -58,7 +58,7 @@ Date.prototype.dateDiff = function(interval,now) {
     t = t % 60000;
     i['s']=Math.floor(t/1000);
     return i[interval]; 
-}
+};
 
 $scope.getQYTime = function(postTime) {
     if (postTime == 0) return '';
@@ -169,6 +169,7 @@ $scope.getPreMsg = function($string) {
 	    preMsg+=ch;
 	}
     }
+    preMsg+="</pre>"
     return preMsg;
 };
     
@@ -191,14 +192,14 @@ $scope.$watchCollection('todos', function () {
 
 	    todo.dateString = $scope.getQYTime(todo.timestamp);
 	    todo.tags = todo.wholeMsg.match(/#\w+/g);
-	    todo.splitMsg=todo.desc.split(/(#\w+)/g);
-	    todo.displayMsg = [];
-	    for (var i in todo.splitMsg){
-		if (todo.splitMsg[i][0] != '#') todo.displayMsg.push($sce.trustAsHtml('<plaintext>'+todo.splitMsg[i]));
-		else todo.displayMsg.push($sce.trustAsHtml('<a href="">' + todo.splitMsg[i] + '</a>'));
-	    }
+//	    todo.splitMsg=todo.desc.split(/(#\w+)/g);
+//	    todo.displayMsg = [];
+//	    for (var i in todo.splitMsg){
+//		if (todo.splitMsg[i][0] != '#') todo.displayMsg.push($sce.trustAsHtml('<plaintext>'+todo.splitMsg[i]));
+//		else todo.displayMsg.push($sce.trustAsHtml('<a href="">' + todo.splitMsg[i] + '</a>'));
+//	    }
 	    todo.preMsg = $scope.getPreMsg(todo.desc);
-	    todo.trustedDesc = $sce.trustAsHtml(todo.preMsg);
+	    todo.trustedDesc = $sce.trustAsHtml(Autolinker.link(todo.preMsg, {newWindow: false, stripPrefix: false}));
 	});
 
 	$scope.totalCount = total;
@@ -208,10 +209,10 @@ $scope.$watchCollection('todos', function () {
 	$scope.absurl = $location.absUrl();
 }, true);
 
-    $scope.editInput = function($string) {
+$scope.editInput = function($string) {
 	if ($string.length >= 11 && $string.toString().slice(0,11) == '<plaintext>') return;
 	$scope.input.wholeMsg = $string.toString().match(/#\w+/g)[0];
-    };
+};
     
 // Get the first sentence and rest
 $scope.getFirstAndRestSentence = function($string) {
@@ -246,8 +247,9 @@ $scope.addTodo = function () {
 	var firstAndLast = $scope.getFirstAndRestSentence(newTodo);
 	var head = firstAndLast[0];
 	var desc = firstAndLast[1];
+    var preMsg = $scope.getPreMsg(desc);
 
-	$scope.todos.$add({
+    $scope.todos.$add({
 		wholeMsg: newTodo,
 		head: head,
 		headLastChar: head.slice(-1),
@@ -257,7 +259,8 @@ $scope.addTodo = function () {
 		timestamp: new Date().getTime(),
 		tags: "...",
 	        echo: 0,
- 	        hate: 0,
+ 	    hate: 0,
+	    preMsg: preMsg,
 	        reply: [[' ',0]],
 	        new_reply: '',
 	        order: 0
@@ -268,10 +271,11 @@ $scope.addTodo = function () {
 
 
 $scope.addReply = function (todo) {
-        var now = new Date();
-        todo.reply.push([todo.new_reply,now.getTime()]);
-        todo.new_reply = '';
-        $scope.todos.$save(todo);
+    var now = new Date();
+    if (todo.new_reply=='') return;
+    todo.reply.push([todo.new_reply,now.getTime()]);
+    todo.new_reply = '';
+    $scope.todos.$save(todo);
 };
 
 $scope.editTodo = function (todo) {
