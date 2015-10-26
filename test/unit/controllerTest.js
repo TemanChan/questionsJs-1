@@ -48,6 +48,8 @@ describe('TodoCtrl', function() {
 	  desc: '',
 	  linkedDesc: Autolinker.link(''  , {newWindow: false, stripPrefix: false}),
 	  completed: true,
+	  new_reply: '',
+	  reply: [[' ',0]],
 	  timestamp: new Date().getTime()-60001,
 	  tags: "...",
 	  echo: 0,
@@ -76,6 +78,8 @@ describe('TodoCtrl', function() {
 	  completed: false,
 	  timestamp: new Date().getTime()-3600001,
 	  tags: "...",
+	  new_reply: 'new',
+	  reply: [[' ',0]],
 	  echo: 0,
 	  order: 0
       };
@@ -106,6 +110,29 @@ describe('TodoCtrl', function() {
 	  
       });
 
+      it('getQYTime Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+
+	  expect(scope.getQYTime(0)).toBe('');
+	  var now = new Date().getTime();
+	  expect(scope.getQYTime(now)).toBe('just now');
+	  expect(scope.getQYTime(now-3600000)).toBe('1 hour ago');
+	  expect(scope.getQYTime(now-3600000)).toBe('1 hour ago');
+	  expect(scope.getQYTime(now-86400000*2)).toBe('2 days ago');
+	  expect(scope.getQYTime(now-86400000*2-3600000)).toBe('2 days 1 hour ago');
+	  expect(scope.getQYTime(now-2*3600000-2*60000)).toBe('2 hours 2 minutes ago');
+	  
+      });
+
+	
       it('setFirstAndRestSentence', function() {
         var ctrl = controller('TodoCtrl', {
           $scope: scope
@@ -125,6 +152,21 @@ describe('TodoCtrl', function() {
           var results = scope.getFirstAndRestSentence(testInputs[i].str);
           expect(results[0]).toEqual(testInputs[i].exp);
         }
+      });
+
+	it('getPreMsg Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+
+	    expect(scope.getPreMsg('<em>\"#test \"</em>')).toBe('<pre>&lt;em&gt;&quot;<strong>#test</strong> &quot;&lt;/em&gt;</pre>');
+	  
       });
 
 
@@ -198,6 +240,20 @@ describe('TodoCtrl', function() {
         expect(scope.increaseMax()).toBe(undefined);
       });
 
+      it('addReply Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+	expect(scope.addReply(testTodo)).toBe(undefined);
+	expect(scope.addReply(testTodo2)).toBe(undefined);
+      });
+	
       it('doneEditing Testing', function() {
 
         var ctrl = controller('TodoCtrl', {
