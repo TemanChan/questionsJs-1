@@ -78,7 +78,7 @@ $scope.getQYTime = function(postTime) {
 	}
 	if (h == 0) {
 	    dateString +=" ago";
-	} else if (m==1) {
+	} else if (h==1) {
 	    dateString +="1 hour ago";
 	} else {
 	    dateString +=h+" hours ago";
@@ -86,37 +86,37 @@ $scope.getQYTime = function(postTime) {
     } else {
 	if (h == 0) {
 	} else if (h == 1) {
-	    dateString = "1 hour "
+	    dateString = "1 hour ";
 	} else {
-	    dateString = h + " hours "
+	    dateString = h + " hours ";
 	}
 
 	if (m == 0) {
-	    dateString +="ago";
+	    dateString += "ago";
 	} else if (m == 1) {
 	    dateString += "1 minute ago";
 	} else {
 	    dateString += m+" minutes ago";
 	}
     }
-    if (dateString == '') return 'just now';
+    if (dateString == '' || dateString =="ago") return 'just now';
     return dateString;
 };	
 
 $scope.trInput = {
     from: {
-	name: 'from',
+	name: 'The Start',
 	value: -5000000000000
     },
     to: {
-	name: 'to',
+	name: 'Now',
 	value: 5000000000000
     }
 };
 
 $scope.trOptions = [
     {
-	name: 'now',
+	name: 'Now',
 	value: 5000000000000
     },
     {
@@ -144,7 +144,7 @@ $scope.trOptions = [
 	value: -365*24*3600000
     },
     {
-	name: 'the start',
+	name: 'The Start',
 	value: -5000000000000
     }
 ];
@@ -215,10 +215,14 @@ $scope.editInput = function($string) {
 	$scope.input.wholeMsg = $string.toString().match(/#\w+/g)[0];
 };
     
+$scope.trustHtml = function (desc) {
+    return $sce.trustAsHtml(desc);
+};
+
 // Get the first sentence and rest
 $scope.getFirstAndRestSentence = function($string) {
 	var head = $string;
-	var desc = "";
+	var desc = " ";
 
 	var separators = [". ", "? ", "! ", '\n'];
 
