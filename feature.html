@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+   	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="../../favicon.ico">
+
+	<title>Question Room</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+	<!-- Custom styles for this template -->
+	<link href="css/feature.css" rel="stylesheet">
+</head>
+<body ng-controller="controller">
+	<div class="site-wrapper">
+		<div class="site-wrapper-inner">
+			<div class="cover-container">
+				<div class="masthead clearfix">
+					<div class="inner">
+						<h3 class="masthead-brand">Question Room</h3>
+						<nav>
+							<ul class="nav masthead-nav">
+								<li><a href="index.html">Home</a></li>
+								<li class="active"><a href="#">Features</a></li>
+								<li><a href="#">Contact</a></li>
+							</ul>
+
+						</nav>
+					</div>
+				</div>
+
+							<ul class="nav masthead-nav feature-nav">
+							  <li><a href="#intro">Intro</a></li>
+							  <li><a href="#ask">Ask</a></li>
+							  <li><a href="#reply">Reply</a></li>
+							  <li><a href="#hashtag">Hashtag</a></li>
+							  <li><a href="#filter">Filter</a></li>
+							</ul>
+
+				
+				<div class="feature-list">
+				      <div class="jumbotron text-center" id="intro">
+					<h1>Ready, Set, Go.</h1>
+					<p>In uAsk, simplicity, is hidding complexity.</p>
+					<img class="show" src="img/intro.png" width="710" height="260">
+					<a href="#">Top</a>
+				      </div>
+				      <div class="jumbotron text-center" id="ask">
+					<h1>Start with a simple question.</h1>
+					<p>Separate your title and content, click Ask, we will do the rest for you.</p>
+					<img class="show" src="img/ask1.png" width="680" height="40">
+					<img class="show" src="img/ask2.png" width="680" height="80">
+					<a href="#">Top</a>
+				      </div>
+				      <div class="jumbotron text-center" id="reply">
+					<h1>Have ideas?</h1>
+					<p>Speak it out, from our Reply.</p>
+					<img class="show" src="img/reply.png" width="680" height="160">
+					<a href="#">Top</a>
+				      </div>
+				      <div class="jumbotron text-center" id="hashtag">
+					<h1>Try #Hashtag.</h1>
+					<p>Everything has its destination.</p>
+					<img class="show" src="img/hashtag.png" width="685" height="112">
+					<a href="#">Top</a>
+				      </div>
+				      <div class="jumbotron text-center" id="filter">
+					<h1>We track your past.</h1>
+					<p>Click filter, and input time duration.</p>
+					<img class="show" src="img/filter.png" width="680" height="164">
+					<a href="#">Top</a>
+				      </div>
+				</div>
+				
+			</div>
+			
+			<!-- Bootstrap core JavaScript
+			================================================== -->
+			<!-- Placed at the end of the document so the pages load faster -->
+			<script src="js/lib/jquery.min.js"></script>
+			<script src="js/lib/bootstrap.min.js"></script>
+
+			<!-- 1.4.2 -->
+			<script src="js/lib/angular.min.js"></script>
+
+			<!--script>
+			angular.module('app', [])
+			.controller('controller', ['$scope', '$location', '$window', function($scope, $location, $window) {
+				$scope.example = {
+					text: '',
+					word: /^\s*\w*\s*$/
+				};
+
+				$scope.join = function () {
+					$window.location.href = 'question.html#/' + $scope.example.text;
+				}
+			}]);
+			</script-->
+		</body>
+		</html>
