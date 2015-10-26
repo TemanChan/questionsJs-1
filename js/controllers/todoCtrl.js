@@ -92,6 +92,7 @@ $scope.getQYTime = function(postTime) {
 	}
 
 	if (m == 0) {
+	    dateString +="ago";
 	} else if (m == 1) {
 	    dateString += "1 minute ago";
 	} else {

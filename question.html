@@ -115,7 +115,7 @@
 	  <span ng-bind-html="todo.trustedDesc"></span>
 	  <div>
 	    <a href ng-repeat="tag in todo.tags track by $index" ng-click="input.wholeMsg=tag">{{tag}} </a>
-	    <small style="display:block">created: {{todo.dateString}}</small>
+	    <small style="display:block"><em>created: {{todo.dateString}}</em></small>
 	  </div>
 	</p>
 
@@ -128,7 +128,7 @@
 			<div class="reply">
 			  <div ng-repeat="r in todo.reply track by $index">
 			    <p style="margin-bottom:0px">{{ r[0] }}</p>
-			    <small style="margin-top:5px;">{{ getQYTime(r[1]) }}</small>
+			    <small style="margin-top:5px;"><em>{{ getQYTime(r[1]) }}</em></small>
 			    <hr style="margin-top:5px;margin-bottom:5px">
 			  </div>
 
