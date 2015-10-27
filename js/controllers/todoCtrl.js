@@ -77,7 +77,7 @@ $scope.getQYTime = function(postTime) {
 	    dateString +=" days ";
 	}
 	if (h == 0) {
-	    dateString +="ago";
+	    dateString +=" ago";
 	} else if (h==1) {
 	    dateString +="1 hour ago";
 	} else {
@@ -149,11 +149,16 @@ $scope.trOptions = [
     }
 ];
 
+/* this is the old one
 $scope.getPreMsg = function($string) {
     var preMsg = "<pre>";
     var inHashtag = false;
     for (var i = 0; i < $string.length; ++i) {
 	var ch = $string.charAt(i);
+	if (inHashtag && (ch == ' ' || ch == '\n')) {
+	    inHashtag = false;
+	    preMsg+="</strong>";
+	}
 	if (ch == '<') {
 	    preMsg+="&lt;";
 	} else if (ch == '>') {
@@ -163,15 +168,33 @@ $scope.getPreMsg = function($string) {
 	} else if (ch == '#' && !inHashtag) {
 	    inHashtag = true;
 	    preMsg+="<strong>"+ch;
-	} else if (inHashtag && (ch == ' ' || ch == '\n')) {
-	    inHashtag = false;
-	    preMsg+="</strong>"+ch;
 	} else {
 	    preMsg+=ch;
 	}
     }
     preMsg+="</pre>"
     return preMsg;
+};
+*/
+
+$scope.getPreMsg = function($string) {
+    var preMsg = "<pre>";
+    for (var i = 0; i < $string.length; ++i) {
+	var ch = $string.charAt(i);
+	if (ch == '<') {
+	    preMsg+="&lt;";
+	} else if (ch == '>') {
+	    preMsg+="&gt;";
+	} else if (ch == '\"') {
+	    preMsg+="&quot;";
+	} else {
+	    preMsg+=ch;
+	}
+    }
+    preMsg+="</pre>"
+    return preMsg.replace(/#\w+/g, function(s) {
+	return "<strong>" + s + "</strong>";
+    });
 };
     
 // pre-precessing for collection
