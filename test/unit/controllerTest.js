@@ -165,7 +165,7 @@ describe('TodoCtrl', function() {
           $window: window
         });
 
-	    expect(scope.getPreMsg('<em>\"#test\"</em> ')).toBe('<pre>&lt;em&gt;&quot;<strong>#test&quot;&lt;/em&gt;</strong> </pre>');
+	    expect(scope.getPreMsg('<em>\"#test\"</em>')).toBe('<pre>&lt;em&gt;&quot;<strong>#test</strong>&quot;&lt;/em&gt;</pre>');
 	  
       });
 

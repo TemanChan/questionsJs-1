@@ -77,7 +77,7 @@ $scope.getQYTime = function(postTime) {
 	    dateString +=" days ";
 	}
 	if (h == 0) {
-	    dateString +=" ago";
+	    dateString +="ago";
 	} else if (h==1) {
 	    dateString +="1 hour ago";
 	} else {
