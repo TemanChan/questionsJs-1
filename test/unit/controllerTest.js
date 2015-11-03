@@ -18,6 +18,7 @@ describe('TodoCtrl', function() {
   var sce;
   var localStorage;
   var window;
+  var httpBackend;
 
   // Injecting variables
   // http://stackoverflow.com/questions/13664144/how-to-unit-test-angularjs-controller-with-location-service
@@ -27,7 +28,8 @@ describe('TodoCtrl', function() {
     $firebaseArray,
     $localStorage,
     $sce,
-    $window){
+    $window,
+    $httpBackend){
       // The injector unwraps the underscores (_) from around the parameter names when matching
 
       scope = $rootScope.$new();
@@ -38,6 +40,7 @@ describe('TodoCtrl', function() {
       sce = $sce;
       localStorage = $localStorage;
       window = $window;
+      httpBackend = $httpBackend;
     }));
 
     describe('TodoCtrl Testing', function() {
@@ -102,9 +105,11 @@ describe('TodoCtrl', function() {
           $firebaseArray: firebaseArray,
           $sce: sce,
           $localStorage: localStorage,
-          $window: window
+          $window: window,
+          $httpBackend: httpBackend
         });
-
+    //httpBackend.expectGET(scope.serverURL + '/api/posts?roomName=all').respond();
+    httpBackend.expectGET().respond();
 	  scope.todos = todos;
 	  scope.$digest();
 	  

@@ -7,8 +7,8 @@
 * - exposes the model to the template and provides event handlers
 */
 todomvc.controller('TodoCtrl',
-['$scope', '$location', '$firebaseArray', '$sce', '$localStorage', '$window',
-function ($scope, $location, $firebaseArray, $sce, $localStorage, $window) {
+['$scope', '$location', '$firebaseArray', 'RESTfulAPI', '$sce', '$localStorage', '$window',
+function ($scope, $location, $firebaseArray, RESTfulAPI, $sce, $localStorage, $window) {
 	// set local storage
 	$scope.$storage = $localStorage;
 
@@ -41,7 +41,19 @@ var echoRef = new Firebase(url);
 var query = echoRef.orderByChild("order");
 // Should we limit?
 //.limitToFirst(1000);
-$scope.todos = $firebaseArray(query);
+//$scope.todos = $firebaseArray(query);
+var params = {roomName: roomId};
+$scope.todos = RESTfulAPI.postQuery(params);
+
+var serverURL = 'http://52.74.132.232:5000';
+$scope.socket = io.connect(serverURL);
+$scope.socket.emit('join', {room: roomId});
+$scope.socket.on('new post', function(data){
+	var post = angular.fromJson(data);
+	post.reply = [];
+	$scope.todos.splice(0, 0, post);
+	$scope.$apply();
+});
 
 $scope.input = {wholeMsg : ''};
 $scope.editedTodo = null;
@@ -278,6 +290,7 @@ $scope.addTodo = function () {
     var preMsg = $scope.getPreMsg(desc);
 
     $scope.todos.$add({
+    	roomName: roomId,
 		wholeMsg: newTodo,
 		head: head,
 		headLastChar: head.slice(-1),
@@ -289,7 +302,7 @@ $scope.addTodo = function () {
 	        echo: 0,
  	    hate: 0,
 	    preMsg: preMsg,
-	        reply: [[' ',0]],
+	        reply: [],
 	        new_reply: '',
 	        order: 0
 	});
@@ -301,9 +314,12 @@ $scope.addTodo = function () {
 $scope.addReply = function (todo) {
     var now = new Date();
     if (todo.new_reply=='') return;
-    todo.reply.push([todo.new_reply,now.getTime()]);
+    $scope.todos.$addReply(todo, {
+    	postId: todo._id,
+    	wholeMsg: todo.new_reply,
+    	timestamp: now.getTime()
+    });
     todo.new_reply = '';
-    $scope.todos.$save(todo);
 };
 
 $scope.editTodo = function (todo) {
@@ -319,7 +335,7 @@ $scope.addEcho = function (todo) {
 	$scope.todos.$save(todo);
 
 	// Disable the button
-	$scope.$storage[todo.$id] = "echoed";
+	$scope.$storage[todo._id] = "echoed";
 };
 
 $scope.addHate = function (todo) {
@@ -330,7 +346,7 @@ $scope.addHate = function (todo) {
 	$scope.todos.$save(todo);
 
 	// Disable the button
-	$scope.$storage[todo.$id] = "echoed";
+	$scope.$storage[todo._id] = "echoed";
 };
 
 
