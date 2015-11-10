@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      @charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}
+    </style>
+    <meta charset="UTF-8">
+    <script src="js/controllers/doodle.js"></script>
+    <script src="js/lib/prefixfree.min.js"></script>
+    <script src="js/lib/modernizr.js"></script>
+    <script src="js/lib/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/doodle.css">
+  </head>
+  <body>
+    
+    <main ng-app='drawApp' ng-controller='drawCtrl'>
+      <div class='contr_canv'>
+	<h1>DoodleIt</h1>
+	<br /> Canvas width
+	<br />
+	<input type='range' min='150' max='1000' ng-model='width' />
+	<br />
+	<br /> Canvas height
+	<br />
+	<input type='range' min='150' max='700' ng-model='height' />
+      </div>
+
+      <div class='wrapper'>
+
+	<div class='controls'>
+	  <div class='contr_col'>
+            <button class='butt_col' ng-click='color="#51e980"'></button>
+            <button class='butt_col' ng-click='color="#3b50ce"'></button>
+            <button class='butt_col' ng-click='color="#F44336"'></button>
+            <button class='butt_col' ng-click='color="#555"'></button>
+
+            <button class='savedoodle'>Save</button>
+            <div class='theimage'>
+              <a href='#' download='doodle' target='_blank'>Click here to download image</a>
+            </div>
+	  </div>
+	  <div class='size'>
+            Stroke size :
+            <br />
+            <input type='range' min='0.3' max='10' ng-model='size' />
+	  </div>
+	</div>
+
+	<canvas id='spad' width='{{width}}' height='{{height}}'></canvas>
+
+      </div>
+    </main>
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/controllers/doodle.js"></script>
+  </body>
+</html>
