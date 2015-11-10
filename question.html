@@ -122,8 +122,8 @@
 	  </div>
 	</p>
 
-	                <button class="btn btn-default btn-xs glyphicon glyphicon-hand-up" ng-click="addEcho(todo)" ng-disabled="$storage[todo.$id]">{{todo.echo}} &nbspLikes</button>
-			<button class="btn btn-default btn-xs glyphicon glyphicon-hand-down" ng-click="addHate(todo)" ng-disabled="$storage[todo.$id]">{{todo.hate}} Dislikes</button>
+	                <button class="btn btn-default btn-xs glyphicon glyphicon-hand-up" ng-click="addEcho(todo)" ng-disabled="$storage[todo._id]">{{todo.echo}} &nbspLikes</button>
+			<button class="btn btn-default btn-xs glyphicon glyphicon-hand-down" ng-click="addHate(todo)" ng-disabled="$storage[todo._id]">{{todo.hate}} Dislikes</button>
 			<button class="btn btn-default btn-xs glyphicon glyphicon glyphicon-comment" data-toggle="collapse" data-target="#reply-form{{ $index + 1}}">&nbspReply</button>
 			<button ng-show="isAdmin" class="btn btn-default btn-xs glyphicon glyphicon-check" ng-click="toggleCompleted(todo)">Toggle Completed</button>
 			&nbsp;
@@ -131,8 +131,8 @@
 
 			<div class="reply">
 			  <div ng-repeat="r in todo.reply track by $index" style="margin-left:1px;">
-			    <p style="margin-bottom:0px">{{ r[0] }}</p>
-			    <small style="margin-top:5px; color:#848484"><em>{{ getQYTime(r[1]) }}</em></small>
+			    <p style="margin-bottom:0px">{{ r.wholeMsg }}</p>
+			    <small style="margin-top:5px; color:#848484"><em>{{ getQYTime(r.timestamp) }}</em></small>
 			    <hr style="margin-top:5px;margin-bottom:5px">
 			  </div>
 
@@ -189,6 +189,9 @@
 <script src="js/directives/todoFocus.js"></script>
 <script src="js/directives/todoBlur.js"></script>
 <script src="js/directives/todoEscape.js"></script>
+<script src="js/services/RESTfulAPI.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular-resource.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
