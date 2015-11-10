@@ -2,7 +2,8 @@
 
 todomvc.factory("RESTfulAPI", ['$resource', function($resource)
 {
-	var serverURL = 'http://52.74.132.232:5000';
+    //	var serverURL = 'http://52.74.132.232:5000'; Tianwen's API
+        var serverURL = 'http://52.76.51.251:5000';
 	var baseURL = serverURL + '/api/';
 
 	var api = {};
