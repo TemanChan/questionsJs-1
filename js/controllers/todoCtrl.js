@@ -300,12 +300,13 @@ $scope.addTodo = function () {
 		timestamp: new Date().getTime(),
 		tags: "...",
 	        echo: 0,
- 	    hate: 0,
-	    preMsg: preMsg,
+ 	        hate: 0,
+	        preMsg: preMsg,
 	        reply: [],
 	        new_reply: '',
-	        order: 0
-	});
+	        order: 0,
+	image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAAEbklEQVR4Xu3Yv2skZQDH4XcGyQ8TFLS6zsbKv8FWyA9SZDfhrCxEsLxOS6+ythUbbRR3tgnJ1lb+CVfYyDV2CnfgJkGyKysb1PPcnU34NjtPqhTvfGE+8zDZbFX8KBAoUAU2TSpQwIIgUgCsSFajYDEQKQBWJKtRsBiIFAArktUoWAxECoAVyWoULAYiBcCKZDUKFgORAmBFshoFi4FIAbAiWY2CxUCkAFiRrEbBYiBSAKxIVqNgMRApAFYkq1GwGIgUACuS1ShYDEQKgBXJahQsBiIFwIpkNQoWA5ECYEWyGgWLgUgBsCJZjYLFQKQAWJGsRsFiIFIArEhWo2AxECkAViSrUbAYiBQAK5LVKFgMRAqAFclqFCwGIgXAimQ1ChYDkQJgRbIaBYuBSAGwIlmNgsVApABYkaxGwWIgUgCsSFajYDEQKQBWJKtRsBiIFAArktUoWAxECoAVyWoULAYiBcCKZDUKFgORAmBFshoFi4FIAbAiWY2CxUCkAFiRrEbBYiBSAKxIVqNgMRApAFYkq9G1g3VwcPDt9vb2w7aP9vLy8ruLi4v32553rl2BtYM1u+0Zrq2trYd1XS+tMJ1O/zozHo+/GY1GHyy9wIFWBdYS1u2drwoMrlZmWh1aa1irAptMJmU4HHaiSSsd9zjUqYirvMGur6+fnJ2dvXOPtp2+tFOwVnmDzT97PW+a5vVOC7njzXcS1m2rXq83XfQBf47rt6Zp3rxj385e1mlY+/v7X+3s7Hy46Onf/td4dXX1+Pz8/LPOSlnxxjsNa9bq6Ojop42Njbdnv1fV/+e4BTadTi+Hw+GrK3bu3PHOw/rnE+/3+8+qqnpt2RtsPB4/Go1GX3ROywo3DNYLsfr9/q9VVb2xDFcpZVJK+bFpmndX6N2Zo2C95FEfHh5+vrm5+emyb+7nfx7/KKX8XlXV14PB4FFn5Cy5UbAWBOr1er/Udf2gDZY5siellO+bpnnc5pp1PgPWkqfb6/V+rqrqrUUf7F+cGAwGne/a+QBt3hp7e3sf7e7uftnm7OwMWKWA1VLL8fHx86qqdmfH67pe2A0ssFqy+vexk5OTi8lk8t4c2Sv+FP43ozfWnWj9fdHp6eknNzc3H8+/YH1aSvmhaZrOf0MP1j1hufzlBcAiI1IArEhWo2AxECkAViSrUbAYiBQAK5LVKFgMRAqAFclqFCwGIgXAimQ1ChYDkQJgRbIaBYuBSAGwIlmNgsVApABYkaxGwWIgUgCsSFajYDEQKQBWJKtRsBiIFAArktUoWAxECoAVyWoULAYiBcCKZDUKFgORAmBFshoFi4FIAbAiWY2CxUCkAFiRrEbBYiBSAKxIVqNgMRApAFYkq1GwGIgUACuS1ShYDEQKgBXJahQsBiIFwIpkNQoWA5ECYEWyGgWLgUgBsCJZjYLFQKQAWJGsRsFiIFIArEhWo2AxECkAViSrUbAYiBQAK5LVKFgMRAqAFclqFCwGIgXAimQ1ChYDkQJgRbIaBYuBSIE/AcColpfqcNd2AAAAAElFTkSuQmCC"
+         });
 	// remove the posted question in the input
 	$scope.input.wholeMsg = '';
 };
