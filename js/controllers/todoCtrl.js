@@ -1,6 +1,7 @@
 /*global todomvc, angular, Firebase */
 'use strict';
 
+
 /**
 * The main controller for the app. The controller:
 * - retrieves and persists the model via the $firebaseArray service
@@ -33,6 +34,23 @@ if (!roomId || roomId.length === 0) {
 // TODO: Please change this URL for your app
 var firebaseURL = "https://crackling-torch-6031.firebaseio.com/";
 
+//doodle
+var pad = document.getElementById('spad');
+var ctx = pad.getContext('2d');
+//var app = angular.module('drawApp', []);
+var color;
+var size;
+var $cont = $('.wrapper');
+var $can = $cont.find('#spad');
+
+function conv(x, y) {
+    return [x - $can.offset().left, y - $can.offset().top];
+}
+
+function splitColor(text) {
+    return (text.split('='))[1].split("\"")[1];
+}
+    
 
 $scope.roomId = roomId;
 var url = firebaseURL + roomId + "/questions/";
@@ -44,6 +62,7 @@ var query = echoRef.orderByChild("order");
 //$scope.todos = $firebaseArray(query);
 var params = {roomName: roomId};
 $scope.todos = RESTfulAPI.postQuery(params);
+$scope.image = '';    
 
 var serverURL = 'http://52.74.132.232:5000';
 $scope.socket = io.connect(serverURL);
@@ -288,7 +307,7 @@ $scope.addTodo = function () {
 	var head = firstAndLast[0];
 	var desc = firstAndLast[1];
     var preMsg = $scope.getPreMsg(desc);
-
+    var image = $scope.image;
     $scope.todos.$add({
     	roomName: roomId,
 		wholeMsg: newTodo,
@@ -305,10 +324,11 @@ $scope.addTodo = function () {
 	        reply: [],
 	        new_reply: '',
 	        order: 0,
-	image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAAEbklEQVR4Xu3Yv2skZQDH4XcGyQ8TFLS6zsbKv8FWyA9SZDfhrCxEsLxOS6+ythUbbRR3tgnJ1lb+CVfYyDV2CnfgJkGyKysb1PPcnU34NjtPqhTvfGE+8zDZbFX8KBAoUAU2TSpQwIIgUgCsSFajYDEQKQBWJKtRsBiIFAArktUoWAxECoAVyWoULAYiBcCKZDUKFgORAmBFshoFi4FIAbAiWY2CxUCkAFiRrEbBYiBSAKxIVqNgMRApAFYkq1GwGIgUACuS1ShYDEQKgBXJahQsBiIFwIpkNQoWA5ECYEWyGgWLgUgBsCJZjYLFQKQAWJGsRsFiIFIArEhWo2AxECkAViSrUbAYiBQAK5LVKFgMRAqAFclqFCwGIgXAimQ1ChYDkQJgRbIaBYuBSAGwIlmNgsVApABYkaxGwWIgUgCsSFajYDEQKQBWJKtRsBiIFAArktUoWAxECoAVyWoULAYiBcCKZDUKFgORAmBFshoFi4FIAbAiWY2CxUCkAFiRrEbBYiBSAKxIVqNgMRApAFYkq9G1g3VwcPDt9vb2w7aP9vLy8ruLi4v32553rl2BtYM1u+0Zrq2trYd1XS+tMJ1O/zozHo+/GY1GHyy9wIFWBdYS1u2drwoMrlZmWh1aa1irAptMJmU4HHaiSSsd9zjUqYirvMGur6+fnJ2dvXOPtp2+tFOwVnmDzT97PW+a5vVOC7njzXcS1m2rXq83XfQBf47rt6Zp3rxj385e1mlY+/v7X+3s7Hy46Onf/td4dXX1+Pz8/LPOSlnxxjsNa9bq6Ojop42Njbdnv1fV/+e4BTadTi+Hw+GrK3bu3PHOw/rnE+/3+8+qqnpt2RtsPB4/Go1GX3ROywo3DNYLsfr9/q9VVb2xDFcpZVJK+bFpmndX6N2Zo2C95FEfHh5+vrm5+emyb+7nfx7/KKX8XlXV14PB4FFn5Cy5UbAWBOr1er/Udf2gDZY5siellO+bpnnc5pp1PgPWkqfb6/V+rqrqrUUf7F+cGAwGne/a+QBt3hp7e3sf7e7uftnm7OwMWKWA1VLL8fHx86qqdmfH67pe2A0ssFqy+vexk5OTi8lk8t4c2Sv+FP43ozfWnWj9fdHp6eknNzc3H8+/YH1aSvmhaZrOf0MP1j1hufzlBcAiI1IArEhWo2AxECkAViSrUbAYiBQAK5LVKFgMRAqAFclqFCwGIgXAimQ1ChYDkQJgRbIaBYuBSAGwIlmNgsVApABYkaxGwWIgUgCsSFajYDEQKQBWJKtRsBiIFAArktUoWAxECoAVyWoULAYiBcCKZDUKFgORAmBFshoFi4FIAbAiWY2CxUCkAFiRrEbBYiBSAKxIVqNgMRApAFYkq1GwGIgUACuS1ShYDEQKgBXJahQsBiIFwIpkNQoWA5ECYEWyGgWLgUgBsCJZjYLFQKQAWJGsRsFiIFIArEhWo2AxECkAViSrUbAYiBQAK5LVKFgMRAqAFclqFCwGIgXAimQ1ChYDkQJgRbIaBYuBSIE/AcColpfqcNd2AAAAAElFTkSuQmCC"
+	image: image
          });
 	// remove the posted question in the input
-	$scope.input.wholeMsg = '';
+    $scope.input.wholeMsg = '';
+    $scope.image = '';
 };
 
 
@@ -443,4 +463,60 @@ angular.element($window).bind("scroll", function() {
 	}
 });
 
+    $scope.color = "#555";
+    $scope.size = "5";
+    $scope.width = 500;
+    $scope.height = 150;
+    $scope.image = '';
+    
+    $can.mousedown(function(e) {
+        ctx.lineWidth = $scope.size;
+        ctx.beginPath();
+
+        var con = conv(e.pageX, e.pageY);
+        var x = con[0];
+        var y = con[1];
+
+        ctx.moveTo(x, y);
+
+        $(this).mousemove(function(e) {
+            var con = conv(e.pageX, e.pageY);
+            var x = con[0];
+            var y = con[1];
+
+            var d = 400;
+            var bar = (x < d || y < d || x > 500 - d || y > 500 - d);
+
+            if (bar) {
+                ctx.lineTo(x, y);
+                ctx.strokeStyle = $scope.color;
+                ctx.stroke();
+            } else {
+                $(this).unbind('mousemove');
+            }
+        });
+
+    }).mouseup(function(e) {
+        $(this).unbind('mousemove');
+    });
+    
+
+    $cont.find('.butt_col').each(function() {
+    var $t = $(this);
+    var col = splitColor($t.attr('ng-click'));
+    $t.css({
+        'background-color': col
+    });
+});
+
+    $scope.resetDoodle = function() {
+	ctx.clearRect(0, 0, pad.width, pad.height);
+	$scope.image='';
+    };
+
+$scope.saveImage = function() {
+    var url = pad.toDataURL("image/png");
+    $scope.image = url;
+};
+    
 }]);

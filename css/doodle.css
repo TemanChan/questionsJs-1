@@ -1,21 +1,19 @@
 @import url(http://fonts.googleapis.com/css?family=Lato);
-body {
+.modal {
     margin: 0;
     padding: 0;
-    background-color: white;
 }
-* {
+.modal * {
     font-family: Helvetica, sans-serif;
-    color: #888;
     box-sizing: border-box;
 }
-canvas#spad {
+.modal canvas#spad {
     background-color: #fff;
     border: 2px solid #888;
     padding: 0;
     border-radius: 10px;
 }
-.contr_canv {
+.modal .contr_canv {
     position: fixed;
     top: 0;
     left: 0;
@@ -30,14 +28,14 @@ canvas#spad {
     -o-box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
     -ms-box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
 }
-.wrapper {
+.modal .wrapper {
     text-align: center;
 }
-.controls {
+.modal .controls {
     text-align: center;
     margin-top: 60px;
 }
-.contr_col {
+.modal .contr_col {
     width: 100%;
     background-color: #fff;
     padding: 5px;
@@ -51,7 +49,7 @@ canvas#spad {
     -o-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
     -ms-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
 }
-.contr_col button.butt_col {
+.modal .contr_col button.butt_col {
     display: inline-block;
     padding: 0;
     background-color: #f44336;
@@ -72,14 +70,14 @@ canvas#spad {
     -o-transition: all 0.3s ease-in-out;
     -ms-transition: all 0.3s ease-in-out;
 }
-.contr_col button.butt_col:hover {
+.modal .contr_col button.butt_col:hover {
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
     -o-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
     -ms-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
 }
-.contr_col button.savedoodle {
+.modal .contr_col button.savedoodle {
     position: absolute;
     right: 30px;
     top: 10px;
@@ -92,11 +90,11 @@ canvas#spad {
     cursor: pointer;
     font-weight: bold;
 }
-.contr_col button.savedoodle:hover {
+.modal .contr_col button.savedoodle:hover {
     background-color: transparent;
     color: #3b50ce;
 }
-.contr_col .theimage {
+.modal .contr_col .theimage {
     position: absolute;
     background-color: #fff;
     padding: 30px;
@@ -111,7 +109,7 @@ canvas#spad {
     -o-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
     -ms-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
 }
-.contr_col .theimage::after {
+.modal .contr_col .theimage::after {
     content: " ";
     width: 0;
     height: 0;

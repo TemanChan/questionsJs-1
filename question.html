@@ -15,12 +15,16 @@
 
 	<title>uAsk: {{roomId}}</title>
 
+	<script src="js/lib/prefixfree.min.js"></script>
+	<script src="js/lib/modernizr.js"></script>
+	<script src="js/lib/jquery.min.js"></script>
+
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-	
-	<!-- need this for comlted ones. TODO: can I do this in bootstrap -->
-	<link rel="stylesheet" href="./css/main.css">
 
+	<!-- need this for comlted ones. TODO: can I do this in bootstrap -->
+	<link rel="stylesheet" href="css/doodle.css">
+	<link rel="stylesheet" href="./css/main.css">
 </head>
 <body ng-controller="TodoCtrl">
   <div class = "jumbotron" style="background-color:#C6E2FF; padding-bottom:10px; margin-bottom:10px; border-bottom:2px #efefef solid;">
@@ -74,6 +78,71 @@
 	    <a data-toggle="collapse" data-target="#filter_list"><span class="glyphicon glyphicon-search"></span>Filters</a>
 	  </div>
 	</div>
+	<div>
+	  <img src="{{image}}" />
+	  <br />
+	  <!-- Button trigger modal -->
+	  <button type="button" class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#myModal">
+	    Doodle It!
+	  </button>
+	  
+	  <!-- Modal -->
+	  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	    <div class="modal-dialog" role="document">
+	      <div class="modal-content">
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <h4 class="modal-title" id="myModalLabel">Doodle It!</h4>
+		</div>
+		<div class="modal-body">
+		  <main>
+		    <!--
+		    <div class='contr_canv'>
+		      <h1>DoodleIt</h1>
+		      <br /> Canvas width
+		      <br />
+		      <input type='range' min='150' max='1000' ng-model='width' />
+		      <br />
+		      <br /> Canvas height
+		      <br />
+		      <input type='range' min='150' max='700' ng-model='height' />
+		    </div>
+		    !-->
+		    <div class='wrapper'>
+		      <div class='controls'>
+			<div class='contr_col'>
+			  <button class='butt_col' ng-click='color="#51e980"'></button>
+			  <button class='butt_col' ng-click='color="#3b50ce"'></button>
+			  <button class='butt_col' ng-click='color="#F44336"'></button>
+			  <button class='butt_col' ng-click='color="#555"'></button>
+<!--			  <button class='savedoodle'>Save</button>
+			  <div class='theimage'>
+			    <a href='#' download='doodle' target='_blank'>Click here to download image</a>
+			  </div> -->
+			</div>
+			<div class='size'>
+			  Stroke size :
+			  <br />
+			  <input type='range' min='0.3' max='10' ng-model='size' />
+			</div>
+		      </div>
+
+		      <canvas id='spad' width='{{width}}' height='{{height}}'></canvas>
+
+		    </div>
+		  </main>
+
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  <button type="button" class="btn btn-default" ng-click="resetDoodle()">Reset</button>
+		  <button type="button" class="btn btn-primary" ng-click="saveImage()">Save changes</button>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	  
+	</div><!-- doodle -->
       </div><!-- /input-group -->
     </div>
   </div>
@@ -191,6 +260,7 @@
 <script src="js/directives/todoBlur.js"></script>
 <script src="js/directives/todoEscape.js"></script>
 <script src="js/services/RESTfulAPI.js"></script>
+<script src="js/controllers/doodle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular-resource.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
