@@ -64,7 +64,8 @@ var params = {roomName: roomId};
 $scope.todos = RESTfulAPI.postQuery(params);
 $scope.image = '';    
 
-var serverURL = 'http://52.74.132.232:5000';
+    //var serverURL = 'http://52.74.132.232:5000'; Tianwen's API
+    var serverURL = 'http://54.254.251.203:5000';
 $scope.socket = io.connect(serverURL);
 $scope.socket.emit('join', {room: roomId});
 $scope.socket.on('new post', function(data){
@@ -502,21 +503,21 @@ angular.element($window).bind("scroll", function() {
     
 
     $cont.find('.butt_col').each(function() {
-    var $t = $(this);
-    var col = splitColor($t.attr('ng-click'));
-    $t.css({
-        'background-color': col
+	var $t = $(this);
+	var col = splitColor($t.attr('ng-click'));
+	$t.css({
+            'background-color': col
+	});
     });
-});
 
     $scope.resetDoodle = function() {
 	ctx.clearRect(0, 0, pad.width, pad.height);
 	$scope.image='';
     };
 
-$scope.saveImage = function() {
-    var url = pad.toDataURL("image/png");
-    $scope.image = url;
-};
+    $scope.saveImage = function() {
+	var url = pad.toDataURL("image/png");
+	$scope.image = url;
+    };
     
 }]);
