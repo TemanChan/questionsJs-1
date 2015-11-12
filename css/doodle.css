@@ -28,14 +28,14 @@
     -o-box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
     -ms-box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
 }
-.modal .wrapper {
+#doodle .wrapper {
     text-align: center;
 }
-.modal .controls {
+#doodle .controls {
     text-align: center;
     margin-top: 60px;
 }
-.modal .contr_col {
+#doodle .contr_col {
     width: 100%;
     background-color: #fff;
     padding: 5px;
@@ -49,7 +49,7 @@
     -o-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
     -ms-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
 }
-.modal .contr_col button.butt_col {
+#doodle .contr_col button.butt_col {
     display: inline-block;
     padding: 0;
     background-color: #f44336;
@@ -70,14 +70,14 @@
     -o-transition: all 0.3s ease-in-out;
     -ms-transition: all 0.3s ease-in-out;
 }
-.modal .contr_col button.butt_col:hover {
+#doodle .contr_col button.butt_col:hover {
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
     -o-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
     -ms-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
 }
-.modal .contr_col button.savedoodle {
+#doodle .contr_col button.savedoodle {
     position: absolute;
     right: 30px;
     top: 10px;
@@ -90,11 +90,11 @@
     cursor: pointer;
     font-weight: bold;
 }
-.modal .contr_col button.savedoodle:hover {
+#doodle .contr_col button.savedoodle:hover {
     background-color: transparent;
     color: #3b50ce;
 }
-.modal .contr_col .theimage {
+#doodle .contr_col .theimage {
     position: absolute;
     background-color: #fff;
     padding: 30px;
@@ -109,7 +109,7 @@
     -o-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
     -ms-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
 }
-.modal .contr_col .theimage::after {
+#doodle .contr_col .theimage::after {
     content: " ";
     width: 0;
     height: 0;

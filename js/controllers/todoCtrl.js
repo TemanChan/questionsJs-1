@@ -34,10 +34,13 @@ if (!roomId || roomId.length === 0) {
 // TODO: Please change this URL for your app
 var firebaseURL = "https://crackling-torch-6031.firebaseio.com/";
 
+    //user
+    var loginUsername = '';
+    var loginPassword = '';
+    
 //doodle
 var pad = document.getElementById('spad');
 var ctx = pad.getContext('2d');
-//var app = angular.module('drawApp', []);
 var color;
 var size;
 var $cont = $('.wrapper');
@@ -466,7 +469,7 @@ angular.element($window).bind("scroll", function() {
 
     $scope.color = "#555";
     $scope.size = "5";
-    $scope.width = 500;
+    $scope.width = 700;
     $scope.height = 150;
     $scope.image = '';
     
