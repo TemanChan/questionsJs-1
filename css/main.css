@@ -31,3 +31,12 @@
 	display: none;
 }
 #toTop .fa {margin-right: 5px;}
+
+#logIn.Title {
+    margin-bottom: 20px;
+}
+
+#logIn .form-control {
+	      margin-bottom: 15px;      
+}
+

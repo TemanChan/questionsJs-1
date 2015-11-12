@@ -31,10 +31,13 @@ if (!roomId || roomId.length === 0) {
 	roomId = "all";
 }
 
+    //user
+    var loginUsername = '';
+    var loginPassword = '';
+    
 //doodle
 var pad = document.getElementById('spad');
 var ctx = pad.getContext('2d');
-//var app = angular.module('drawApp', []);
 var color;
 var size;
 var $cont = $('.wrapper');
@@ -447,7 +450,7 @@ angular.element($window).bind("scroll", function() {
 
     $scope.color = "#555";
     $scope.size = "5";
-    $scope.width = 500;
+    $scope.width = 700;
     $scope.height = 150;
     $scope.image = '';
     
@@ -484,21 +487,21 @@ angular.element($window).bind("scroll", function() {
     
 
     $cont.find('.butt_col').each(function() {
-    var $t = $(this);
-    var col = splitColor($t.attr('ng-click'));
-    $t.css({
-        'background-color': col
+	var $t = $(this);
+	var col = splitColor($t.attr('ng-click'));
+	$t.css({
+            'background-color': col
+	});
     });
-});
 
     $scope.resetDoodle = function() {
 	ctx.clearRect(0, 0, pad.width, pad.height);
 	$scope.image='';
     };
 
-$scope.saveImage = function() {
-    var url = pad.toDataURL("image/png");
-    $scope.image = url;
-};
+    $scope.saveImage = function() {
+	var url = pad.toDataURL("image/png");
+	$scope.image = url;
+    };
     
 }]);
