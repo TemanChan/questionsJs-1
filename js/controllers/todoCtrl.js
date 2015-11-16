@@ -38,9 +38,11 @@ var firebaseURL = "https://crackling-torch-6031.firebaseio.com/";
     var loginUsername = '';
     var loginPassword = '';
     
-//doodle
+    //doodle
 var pad = document.getElementById('spad');
-var ctx = pad.getContext('2d');
+var ctx;
+if (pad!=null)
+    {ctx = pad.getContext('2d');}
 var color;
 var size;
 var $cont = $('.wrapper');
