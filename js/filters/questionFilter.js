@@ -16,7 +16,8 @@ todomvc.filter('questionFilter', function () {
       if (todo.timestamp > new Date().getTime() - 180000) { // 3min
         todo.new = true;
         newQuestions.push(todo);
-      } else if (sortedCount++<=max){  // show top n only.
+      } 
+      else if (sortedCount++<=max){  // show top n only.
         todo.new = false;
         sorted.push(todo);
       }
@@ -29,9 +30,11 @@ todomvc.filter('questionFilter', function () {
         }
         return a.order - b.order;
       });
+
     });
 
     // Combined list
     return newQuestions.concat(sorted);
   };
+  
 });
