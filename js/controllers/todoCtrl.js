@@ -8,8 +8,8 @@
 * - exposes the model to the template and provides event handlers
 */
 todomvc.controller('TodoCtrl',
-['$scope', '$location', '$firebaseArray', 'RESTfulAPI', '$sce', '$localStorage', '$window',
-function ($scope, $location, $firebaseArray, RESTfulAPI, $sce, $localStorage, $window) {
+['$scope', '$location', 'RESTfulAPI', '$sce', '$localStorage', '$window',
+function ($scope, $location, RESTfulAPI, $sce, $localStorage, $window) {
 	// set local storage
 	$scope.$storage = $localStorage;
 
@@ -30,9 +30,6 @@ var roomId = angular.lowercase(splits[1]);
 if (!roomId || roomId.length === 0) {
 	roomId = "all";
 }
-
-// TODO: Please change this URL for your app
-var firebaseURL = "https://crackling-torch-6031.firebaseio.com/";
 
     //user
     var loginUsername = '';
@@ -58,27 +55,10 @@ function splitColor(text) {
     
 
 $scope.roomId = roomId;
-var url = firebaseURL + roomId + "/questions/";
-var echoRef = new Firebase(url);
 
-var query = echoRef.orderByChild("order");
-// Should we limit?
-//.limitToFirst(1000);
-//$scope.todos = $firebaseArray(query);
 var params = {roomName: roomId};
 $scope.todos = RESTfulAPI.postQuery(params);
 $scope.image = '';    
-
-    //var serverURL = 'http://52.74.132.232:5000'; Tianwen's API
-    var serverURL = 'http://54.254.251.203:5000';
-$scope.socket = io.connect(serverURL);
-$scope.socket.emit('join', {room: roomId});
-$scope.socket.on('new post', function(data){
-	var post = angular.fromJson(data);
-	post.reply = [];
-	$scope.todos.splice(0, 0, post);
-	$scope.$apply();
-});
 
 $scope.input = {wholeMsg : ''};
 $scope.editedTodo = null;
@@ -356,21 +336,22 @@ $scope.editTodo = function (todo) {
 
 $scope.addEcho = function (todo) {
 	$scope.editedTodo = todo;
-	todo.echo = todo.echo + 1;
+	//todo.echo = todo.echo + 1;
 	// Hack to order using this order.
-        todo.order = todo.order -1;
-	$scope.todos.$save(todo);
-
+        //todo.order = todo.order -1;
+	//$scope.todos.$save(todo);
+	$scope.todos.$like(todo);
 	// Disable the button
 	$scope.$storage[todo._id] = "echoed";
 };
 
 $scope.addHate = function (todo) {
 	$scope.editedTodo = todo;
-	todo.hate = todo.hate + 1;
+	//todo.hate = todo.hate + 1;
 	// Hack to order using this order.
-	todo.order = todo.order + 1;
-	$scope.todos.$save(todo);
+	//todo.order = todo.order + 1;
+	//$scope.todos.$save(todo);
+	$scope.todos.$dislike(todo);
 
 	// Disable the button
 	$scope.$storage[todo._id] = "echoed";
