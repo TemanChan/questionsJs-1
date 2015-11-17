@@ -3,8 +3,9 @@
 todomvc.factory("RESTfulAPI", ['$resource', 'socketFactory', function($resource, socketFactory)
 {
     //  var serverURL = 'http://52.76.51.251'; Meluo's API
-    var serverURL = 'http://54.254.251.203';
+    //var serverURL = 'http://54.254.251.203';
     //var serverURL = 'http://54.169.201.112'; // for testing
+    var serverURL = 'http://54.254.251.203';
 	var baseURL = serverURL + ':5000/api/';
 
 	var api = {};
@@ -42,7 +43,7 @@ todomvc.factory("RESTfulAPI", ['$resource', 'socketFactory', function($resource,
 		};
 		api.userResource.signup(user, function(data) {
 			// received data is a dictionary. {"result": boolean}
-			var signupResult = data.result;
+		    var signupResult = data.result;
 			callback(signupResult);
 		});
 	};
