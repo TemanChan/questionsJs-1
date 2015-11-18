@@ -32,8 +32,9 @@ if (!roomId || roomId.length === 0) {
 }
 
     //user
-    var loginUsername = '';
-    var loginPassword = '';
+
+    $scope.username = '';
+    $scope.password = '';
     
     //doodle
 var pad = document.getElementById('spad');
@@ -48,7 +49,7 @@ var $can = $cont.find('#spad');
 function conv(x, y) {
     return [x - $can.offset().left, y - $can.offset().top];
 }
-
+    
 function splitColor(text) {
     return (text.split('='))[1].split("\"")[1];
 }
@@ -59,9 +60,12 @@ $scope.roomId = roomId;
 var params = {roomName: roomId};
 $scope.todos = RESTfulAPI.postQuery(params);
 $scope.image = '';    
-
+    $scope.isAdmin = false;
+    $scope.authname = '';
+    
 $scope.input = {wholeMsg : ''};
 $scope.editedTodo = null;
+    $scope.incognito = false;
 
 Date.prototype.dateDiff = function(interval,now) { 
     var t = now.getTime() - this.getTime();
@@ -289,6 +293,14 @@ $scope.addTodo = function () {
 		return;
 	}
 
+    var username = 'Anonymous';
+    var anonymous = true;
+    
+    if ($scope.isAdmin) {
+	username = $scope.authname;
+	anonymous = $scope.incognito;
+    }
+
 	var firstAndLast = $scope.getFirstAndRestSentence(newTodo);
 	var head = firstAndLast[0];
 	var desc = firstAndLast[1];
@@ -310,7 +322,9 @@ $scope.addTodo = function () {
 	        reply: [],
 	        new_reply: '',
 	        order: 0,
-	image: image
+	image: image,
+	username: username,
+	anonymous: anonymous
          });
 	// remove the posted question in the input
     $scope.input.wholeMsg = '';
@@ -321,10 +335,21 @@ $scope.addTodo = function () {
 $scope.addReply = function (todo) {
     var now = new Date();
     if (todo.new_reply=='') return;
+
+    var username = 'Anonymous';
+    var anonymous = true;
+    
+    if ($scope.isAdmin) {
+	username = $scope.authname;
+	anonymous = $scope.incognito;
+    }
+
     $scope.todos.$addReply(todo, {
     	postId: todo._id,
     	wholeMsg: todo.new_reply,
-    	timestamp: now.getTime()
+    	timestamp: now.getTime(),
+	username: username,
+	anonymous: anonymous
     });
     todo.new_reply = '';
 };
@@ -364,7 +389,7 @@ $scope.doneEditing = function (todo) {
 	if (wholeMsg) {
 		$scope.todos.$save(todo);
 	} else {
-		$scope.removeTodo(todo);
+	    $scope.removeTodo(todo, $scope.authname);
 	}
 };
 
@@ -374,13 +399,13 @@ $scope.revertEditing = function (todo) {
 };
 
 $scope.removeTodo = function (todo) {
-	$scope.todos.$remove(todo);
+    $scope.todos.$remove(todo, $scope.authname);
 };
 
 $scope.clearCompletedTodos = function () {
 	$scope.todos.forEach(function (todo) {
 		if (todo.completed) {
-			$scope.removeTodo(todo);
+		    $scope.removeTodo(todo, $scope.authname);
 		}
 	});
 };
@@ -505,5 +530,48 @@ angular.element($window).bind("scroll", function() {
 	var url = pad.toDataURL("image/png");
 	$scope.image = url;
     };
+
+
+    $scope.signupCallback = function(result) {
+	if (!result) {
+	    console.log("Sign up Failed! Username exits.");
+	} else {
+	    $scope.authname = $scope.username;
+	    $scope.username = '';
+	    $scope.password = '';
+	    $scope.isAdmin = true;
+	    console.log("Successfully sign up and log in");//, authData);
+	}
+    };
+
+    $scope.loginCallback = function(result) {
+	if (!result) {
+	    console.log("Log in failed");
+	} else {
+	    $scope.authname = $scope.username;
+	    $scope.isAdmin = true;
+	    $scope.username = '';
+	    $scope.password = '';
+	    console.log("Successfully log in");//, authData);
+	}
+    };
     
+    
+    $scope.signup = function() {
+	if ($scope.isAdmin) return;
+	RESTfulAPI.signup($scope.username, $scope.password, $scope.signupCallback);
+    };
+
+    $scope.login = function() {
+	if ($scope.isAdmin) return;
+	RESTfulAPI.login($scope.username, $scope.password, $scope.loginCallback);
+    };
+
+    $scope.logout = function() {
+	$scope.isAdmin = false;
+	$scope.username = '';
+	$scope.password = '';
+	$scope.authname = '';
+    };
+
 }]);

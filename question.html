@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="en" ng-app="todomvc" scroll data-framework="firebase">
-<head ng-controller="TodoCtrl">
+<html lang="en" ng-app="todomvc" ng-controller="TodoCtrl"  scroll data-framework="firebase">
+<head>
 	<meta charset="utf-8">
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,7 +26,7 @@
 	<link rel="stylesheet" href="css/doodle.css">
 	<link rel="stylesheet" href="./css/main.css">
 </head>
-<body ng-controller="TodoCtrl">
+<body>
   <div class = "jumbotron" style="background-color:#C6E2FF; padding-bottom:10px; margin-bottom:10px; border-bottom:2px #efefef solid;">
     <div class = "container">
       <div class = "row">
@@ -49,12 +49,16 @@
       </div>
       
       <div class = "row">
+	<div ng-show="isAdmin" style="float:left;" class="pull-left">
+	  <span><em>&nbsp&nbsp&nbsp&nbsp&nbspWelcome, {{authname}}!</em></span>
+	  <span><em>Incognito Mode is <a ng-click="incognito=!incognito">{{(incognito)?"on":"off"}}</a></em></span>
+	</div>
 	<div class = "pull-right">
 	  <a class="btn btn-default" href="./index.html">Main</a>
 	  <!-- button ng-hide="$authData" class="btn btn-primary left" type="button" ng-click="FBLogin()">Want Admin? Sign in with Facebook</button -->
 
-	  <button type="button" class="btn btn-primary left" data-toggle="modal" data-target="#logIn">
-	    Log In
+	  <button type="button" class="btn btn-primary left" data-toggle="modal" data-target="#logIn" ng-hide="isAdmin">
+	    Sign In
 	  </button>
 
 	  <div class="modal fade" id="logIn">
@@ -62,18 +66,20 @@
 	      <div class="modal-content">
 		<div class="modal-header">
 		  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		  <h4 class="modal-title">Log In</h4>
+		  <h4 class="modal-title">Sign up / Log In</h4>
 		</div>
 		<div class="modal-body">
 		  <main>
 		    <div class="text-center sign-in-block">
-		      <h3 class="title">Log into uAsk</h3>
+		      <h3 class="title">Sign up / Log in to uAsk</h3>
 		      <div class= "col-md-4 col-md-offset-4">
 			<form class="form-signin">
-			  <input type="text" class="form-control" placeholder="Username" ng-model="loginUsername" autocomplete="on" required>
-			  <input type="password" class="form-control" placeholder="Password" ng-model="loginPassword" autocompelete="off" required>
-			  <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="authorize()">
-			    Sign in</button>
+			  <input type="text" class="form-control" placeholder="Username" ng-model="username" autocomplete="on" required>
+			  <input type="password" class="form-control" placeholder="Password" ng-model="password" autocompelete="off" required>
+			  <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="signup()" data-dismiss="modal">
+			    Sign up</button>
+			  <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login()" data-dismiss="modal">
+			    Log in</button>
 			  <label class="checkbox pull-left">
 			    <input type="checkbox" value="remember-me">
 			    Remember me
@@ -81,8 +87,8 @@
 			</form>
 		      </div>
 		    </div>
-		    <!-- Don't modefi this part please -->
-		    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+		    <!-- Don't modify this part please -->
+		    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 		  </main>
 		</div>
 
@@ -91,9 +97,8 @@
 	  </div><!-- /.modal for login-->
 
 	  <!-- after login -->
-	  <img ng-show="$authData" src="https://graph.facebook.com/{{$authData.facebook.id}}/picture/?type=square&return_ssl_resources=1" alt="{{name}}" />
-	  {{$authData.facebook.displayName}}
-	  <button ng-show="$authData" class="btn btn-primary left" type="button" ng-click="FBLogout()">Logout</button>
+	  <!-- img ng-show="$authData" src="https://graph.facebook.com/{{$authData.facebook.id}}/picture/?type=square&return_ssl_resources=1" alt="{{name}}" /-->
+	  <button ng-show="isAdmin" class="btn btn-primary left" type="button" ng-click="logout()">Log out</button>
 	</div>
       </div>
     </div>
@@ -226,27 +231,28 @@
 	  <img src="{{todo.image}}"/>
 	  <div>
 	    <a href ng-repeat="tag in todo.tags track by $index" ng-click="input.wholeMsg=tag">{{tag}} </a>
-	    <small style="display:block; color:#848484 margin-left:1px;"><em>created: {{todo.dateString}}</em></small>
+	    <small style="display:block; color:#848484 margin-left:1px;"><em>created: {{todo.dateString}} by {{(todo.anonymous)?"Anonymous":todo.username}}{{(isAdmin && authname==todo.username)?" (me)":""}}</em></small>
 	  </div>
 	</p>
 
 	                <button class="btn btn-default btn-xs glyphicon glyphicon-hand-up" ng-click="addEcho(todo)" ng-disabled="$storage[todo._id]">{{todo.echo}} &nbspLikes</button>
 			<button class="btn btn-default btn-xs glyphicon glyphicon-hand-down" ng-click="addHate(todo)" ng-disabled="$storage[todo._id]">{{todo.hate}} Dislikes</button>
-			<button class="btn btn-default btn-xs glyphicon glyphicon glyphicon-comment" data-toggle="collapse" data-target="#reply-form{{ $index + 1}}">&nbspReply</button>
+			<button ng-show="isAdmin" class="btn btn-default btn-xs glyphicon glyphicon glyphicon-comment" data-toggle="collapse" data-target="#reply-form{{ $index + 1}}">&nbspReply</button>
 			<button ng-show="isAdmin" class="btn btn-default btn-xs glyphicon glyphicon-check" ng-click="toggleCompleted(todo)">Toggle Completed</button>
 			&nbsp;
-			<button ng-show="isAdmin" class="btn btn-default btn-xs glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeTodo(todo)">Del</button>
-
+			<button ng-show="isAdmin" class="btn btn-default btn-xs glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeTodo(todo)">Delete</button>
+			<hr style="margin-top:5px;margin-bottom:5px">
+			
 			<div class="reply">
 			  <div ng-repeat="r in todo.reply track by $index" style="margin-left:1px;">
 			    <p style="margin-bottom:0px">{{ r.wholeMsg }}</p>
-			    <small style="margin-top:5px; color:#848484"><em>{{ getQYTime(r.timestamp) }}</em></small>
+			    <small style="margin-top:5px; color:#848484"><em>{{ getQYTime(r.timestamp)}} by {{(r.anonymous)?"Anonymous":r.username}}</em></small>
 			    <hr style="margin-top:5px;margin-bottom:5px">
 			  </div>
 
 			  <div id = "reply-form{{ $index + 1}}" class = "container collapse" style="padding-bottom:4px; padding-left:0px;">
 			    <div class = "row">
-			      <div class="reply-group">
+			      <div class="reply-group" ng-hide="!isAdmin">
 				<div class = "col-md-10">
 				  <textarea type="text" class="form-control"
 					    placeholder="I also say something..."
