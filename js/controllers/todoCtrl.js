@@ -358,7 +358,14 @@ $scope.addHate = function (todo) {
 	$scope.$storage[todo._id] = "echoed";
 };
 
-
+$scope.reply_to = function (r, todo) {
+    if (r.anonymous) {
+	todo.new_reply = "+Anonymous "+todo.new_reply;
+    } else {
+	todo.new_reply = "+"+r.username+" "+todo.new_reply;
+    }
+};
+    
 $scope.doneEditing = function (todo) {
 	$scope.editedTodo = null;
 	var wholeMsg = todo.wholeMsg.trim();

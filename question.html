@@ -231,7 +231,7 @@
 	  <img src="{{todo.image}}"/>
 	  <div>
 	    <a href ng-repeat="tag in todo.tags track by $index" ng-click="input.wholeMsg=tag">{{tag}} </a>
-	    <small style="display:block; color:#848484 margin-left:1px;"><em>created: {{todo.dateString}} by {{(todo.anonymous)?"Anonymous":todo.username}}{{(isAdmin && authname==todo.username)?" (me)":""}}</em></small>
+	    <small style="display:block; color:#848484 margin-left:1px;"><em>created: {{todo.dateString}} by <a ng-click="reply_to(todo,todo)">{{(todo.anonymous)?"Anonymous":todo.username}}</a>{{(isAdmin && authname==todo.username)?" (me)":""}}</em></small>
 	  </div>
 	</p>
 
@@ -246,7 +246,7 @@
 			<div class="reply">
 			  <div ng-repeat="r in todo.reply track by $index" style="margin-left:1px;">
 			    <p style="margin-bottom:0px">{{ r.wholeMsg }}</p>
-			    <small style="margin-top:5px; color:#848484"><em>{{ getQYTime(r.timestamp)}} by {{(r.anonymous)?"Anonymous":r.username}}</em></small>
+			    <small style="margin-top:5px; color:#848484"><em>{{ getQYTime(r.timestamp)}} by <a ng-click="reply_to(r,todo)">{{(r.anonymous)?"Anonymous":r.username}}</a></em></small>
 			    <hr style="margin-top:5px;margin-bottom:5px">
 			  </div>
 
