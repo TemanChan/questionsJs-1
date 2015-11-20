@@ -68,6 +68,8 @@ describe('TodoCtrl', function() {
 	  completed: false,
 	  timestamp: new Date().getTime()-100000000,
 	  tags: "...",
+	  new_reply: 'new',
+	  reply: [[' ',0]],
 	  echo: 0,
 	  order: 0
       };
@@ -92,6 +94,8 @@ describe('TodoCtrl', function() {
 	      foo(testTodo);
 	      foo(testTodo2);
 	      foo(testTodo3);
+	  },
+	  $remove: function(a, b) {
 	  }
       }
 	
@@ -186,9 +190,13 @@ describe('TodoCtrl', function() {
           $window: window
         });
 
-	scope.input = {wholeMsg : "test"};
+	  scope.input = {wholeMsg : "test"};
+	  scope.isAdmin = true;
 	scope.addTodo();
-	expect(scope.input.wholeMsg).toBe('');
+	  expect(scope.input.wholeMsg).toBe('');
+	  scope.input = {wholeMsg : "test"};
+	  scope.isAdmin = false;
+	scope.addTodo();
 	scope.addTodo();
 	expect(scope.input.wholeMsg).toBe('');
       });
@@ -207,6 +215,7 @@ describe('TodoCtrl', function() {
         expect(scope.editTodo(testTodo)).toBe(undefined);
       });
 
+/*
 	it('editInput Testing', function() {
 
         var ctrl = controller('TodoCtrl', {
@@ -227,7 +236,8 @@ describe('TodoCtrl', function() {
 	    expect(scope.input.wholeMsg).toEqual("#abc");
 	    
       });
-
+*/
+	
       it('inscreaseMax Testing', function() {
 
         var ctrl = controller('TodoCtrl', {
@@ -255,8 +265,12 @@ describe('TodoCtrl', function() {
           $localStorage: localStorage,
           $window: window
         });
-	expect(scope.addReply(testTodo)).toBe(undefined);
+	  expect(scope.addReply(testTodo)).toBe(undefined);
+	  scope.isAdmin = false;
+	expect(scope.addReply(testTodo3)).toBe(undefined);
+	  scope.isAdmin = true;
 	expect(scope.addReply(testTodo2)).toBe(undefined);
+	  
       });
 	
       it('doneEditing Testing', function() {
@@ -301,6 +315,20 @@ describe('TodoCtrl', function() {
         expect(scope.revertEditing(testTodo)).toBe(undefined);
       });
 
+	it('clearCompletedTodos Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+	    scope.todos = todos;
+	    scope.clearCompletedTodos();
+      });
+
 
       it('RoomId', function() {
         location.path('/new/path');
@@ -310,9 +338,122 @@ describe('TodoCtrl', function() {
           $location: location
         });
 
-        expect(scope.roomId).toBe("new");
+	  expect(scope.roomId).toBe("new");
       });
 
+      it('image', function() {
+        location.path('/new/path');
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location
+        });
+
+        expect(scope.image).toBe('');
+      });
+
+      it('usersystem', function() {
+        location.path('/new/path');
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location
+        });
+
+          expect(scope.authname).toBe('');
+	  expect(scope.username).toBe('');
+	  expect(scope.password).toBe('');
+	  expect(scope.isAdmin).toBe(false);
+      });
+
+      it('signupCallback Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+
+	  scope.signupCallback(false);
+	  expect(scope.isAdmin).toBe(false);
+	  scope.signupCallback(true);
+	  expect(scope.isAdmin).toBe(true);
+			   
+      });
+
+      it('loginCallback Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+
+	  scope.loginCallback(false);
+	  expect(scope.isAdmin).toBe(false);
+	  scope.loginCallback(true);
+	  expect(scope.isAdmin).toBe(true);
+			   
+      });
+
+
+      it('signup Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+	  scope.isAdmin = false;
+	  scope.signup();
+	  scope.isAdmin = true;
+	  scope.signup();
+			   
+      });
+
+      it('login Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+	  scope.isAdmin = false;
+	  scope.login();
+	  scope.isAdmin = true;
+	  scope.login();
+			   
+      });
+
+      it('logout Testing', function() {
+
+        var ctrl = controller('TodoCtrl', {
+          $scope: scope,
+          $location: location,
+          $firebaseArray: firebaseArray,
+          $sce: sce,
+          $localStorage: localStorage,
+          $window: window
+        });
+	  scope.isAdmin = true;
+	  scope.logout();
+	  expect(scope.isAdmin).toBe(false);
+			   
+      });
+
+	
       it('toTop Testing', function() {
 
         var ctrl = controller('TodoCtrl', {
