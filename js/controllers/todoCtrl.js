@@ -32,7 +32,6 @@ if (!roomId || roomId.length === 0) {
 }
 
     //user
-
     $scope.username = '';
     $scope.password = '';
     
@@ -60,13 +59,18 @@ $scope.roomId = roomId;
 var params = {roomName: roomId};
 $scope.todos = RESTfulAPI.postQuery(params);
 $scope.image = '';    
+//isAdmin is true if the user has log n
     $scope.isAdmin = false;
+//authname will denote the name of the current user
     $scope.authname = '';
     
 $scope.input = {wholeMsg : ''};
 $scope.editedTodo = null;
+//incognito is true if the user is in incognito mode
     $scope.incognito = false;
 
+    //datediff returns the difference now and the date
+    //return value is specified by interval (d,h,m,s)
 Date.prototype.dateDiff = function(interval,now) { 
     var t = now.getTime() - this.getTime();
     var i = {};
@@ -81,6 +85,7 @@ Date.prototype.dateDiff = function(interval,now) {
     return i[interval]; 
 };
 
+    //getQYTime transfers the post time to the correct time string
 $scope.getQYTime = function(postTime) {
     if (postTime == 0) return '';
     var postDate = new Date(postTime);
@@ -111,7 +116,6 @@ $scope.getQYTime = function(postTime) {
 	} else {
 	    dateString = h + " hours ";
 	}
-
 	if (m == 0) {
 	    dateString += "ago";
 	} else if (m == 1) {
@@ -124,6 +128,7 @@ $scope.getQYTime = function(postTime) {
     return dateString;
 };	
 
+//trInpot and options are for time range filter
 $scope.trInput = {
     from: {
 	name: 'The Start',
@@ -170,34 +175,7 @@ $scope.trOptions = [
     }
 ];
 
-/* this is the old one
-$scope.getPreMsg = function($string) {
-    var preMsg = "<pre>";
-    var inHashtag = false;
-    for (var i = 0; i < $string.length; ++i) {
-	var ch = $string.charAt(i);
-	if (inHashtag && (ch == ' ' || ch == '\n')) {
-	    inHashtag = false;
-	    preMsg+="</strong>";
-	}
-	if (ch == '<') {
-	    preMsg+="&lt;";
-	} else if (ch == '>') {
-	    preMsg+="&gt;";
-	} else if (ch == '\"') {
-	    preMsg+="&quot;";
-	} else if (ch == '#' && !inHashtag) {
-	    inHashtag = true;
-	    preMsg+="<strong>"+ch;
-	} else {
-	    preMsg+=ch;
-	}
-    }
-    preMsg+="</pre>"
-    return preMsg;
-};
-*/
-
+//getPreMsg transfer the string into preMsg to aviod XSS
 $scope.getPreMsg = function($string) {
     var preMsg = "<pre>";
     for (var i = 0; i < $string.length; ++i) {
@@ -254,11 +232,14 @@ $scope.$watchCollection('todos', function () {
 	$scope.absurl = $location.absUrl();
 }, true);
 
+    /*
 $scope.editInput = function($string) {
 	if ($string.length >= 11 && $string.toString().slice(0,11) == '<plaintext>') return;
 	$scope.input.wholeMsg = $string.toString().match(/#\w+/g)[0];
 };
-    
+    */
+
+    //trust the input as html
 $scope.trustHtml = function (desc) {
     return $sce.trustAsHtml(desc);
 };
@@ -295,7 +276,9 @@ $scope.addTodo = function () {
 
     var username = 'Anonymous';
     var anonymous = true;
-    
+
+    //if is loged in, the username is kept
+    //anonymous is for incognito
     if ($scope.isAdmin) {
 	username = $scope.authname;
 	anonymous = $scope.incognito;
@@ -305,9 +288,10 @@ $scope.addTodo = function () {
 	var head = firstAndLast[0];
 	var desc = firstAndLast[1];
     var preMsg = $scope.getPreMsg(desc);
+    //the image is the one produced by doodle
     var image = $scope.image;
     $scope.todos.$add({
-    	roomName: roomId,
+    	        roomName: roomId,
 		wholeMsg: newTodo,
 		head: head,
 		headLastChar: head.slice(-1),
@@ -322,9 +306,9 @@ $scope.addTodo = function () {
 	        reply: [],
 	        new_reply: '',
 	        order: 0,
-	image: image,
-	username: username,
-	anonymous: anonymous
+	        image: image,
+	        username: username,
+	        anonymous: anonymous
          });
 	// remove the posted question in the input
     $scope.input.wholeMsg = '';
@@ -361,10 +345,6 @@ $scope.editTodo = function (todo) {
 
 $scope.addEcho = function (todo) {
 	$scope.editedTodo = todo;
-	//todo.echo = todo.echo + 1;
-	// Hack to order using this order.
-        //todo.order = todo.order -1;
-	//$scope.todos.$save(todo);
 	$scope.todos.$like(todo);
 	// Disable the button
 	$scope.$storage[todo._id] = "echoed";
@@ -372,17 +352,20 @@ $scope.addEcho = function (todo) {
 
 $scope.addHate = function (todo) {
 	$scope.editedTodo = todo;
-	//todo.hate = todo.hate + 1;
-	// Hack to order using this order.
-	//todo.order = todo.order + 1;
-	//$scope.todos.$save(todo);
 	$scope.todos.$dislike(todo);
 
 	// Disable the button
 	$scope.$storage[todo._id] = "echoed";
 };
 
-
+$scope.reply_to = function (r, todo) {
+    if (r.anonymous) {
+	todo.new_reply = "+Anonymous "+todo.new_reply;
+    } else {
+	todo.new_reply = "+"+r.username+" "+todo.new_reply;
+    }
+};
+    
 $scope.doneEditing = function (todo) {
 	$scope.editedTodo = null;
 	var wholeMsg = todo.wholeMsg.trim();
@@ -422,6 +405,7 @@ $scope.markAll = function (allCompleted) {
 	});
 };
 
+    /*
 $scope.FBLogin = function () {
 	var ref = new Firebase(firebaseURL);
 	ref.authWithOAuthPopup("facebook", function(error, authData) {
@@ -443,7 +427,8 @@ $scope.FBLogout = function () {
 	delete $scope.$authData;
 	$scope.isAdmin = false;
 };
-
+    */
+    
 $scope.increaseMax = function () {
 	if ($scope.maxQuestion < $scope.totalCount) {
 		$scope.maxQuestion+=scrollCountDelta;
@@ -475,103 +460,104 @@ angular.element($window).bind("scroll", function() {
 	}
 });
 
-    $scope.color = "#555";
-    $scope.size = "5";
-    $scope.width = 700;
-    $scope.height = 150;
-    $scope.image = '';
+//initialize doodle
+$scope.color = "#555";
+$scope.size = "5";
+$scope.width = 700;
+$scope.height = 150;
+$scope.image = '';
     
-    $can.mousedown(function(e) {
-        ctx.lineWidth = $scope.size;
-        ctx.beginPath();
+$can.mousedown(function(e) {
+    ctx.lineWidth = $scope.size;
+    ctx.beginPath();
 
+    var con = conv(e.pageX, e.pageY);
+    var x = con[0];
+    var y = con[1];
+
+    ctx.moveTo(x, y);
+
+    $(this).mousemove(function(e) {
         var con = conv(e.pageX, e.pageY);
         var x = con[0];
         var y = con[1];
-
-        ctx.moveTo(x, y);
-
-        $(this).mousemove(function(e) {
-            var con = conv(e.pageX, e.pageY);
-            var x = con[0];
-            var y = con[1];
-
-            var d = 400;
-            var bar = (x < d || y < d || x > 500 - d || y > 500 - d);
-
-            if (bar) {
-                ctx.lineTo(x, y);
-                ctx.strokeStyle = $scope.color;
-                ctx.stroke();
-            } else {
-                $(this).unbind('mousemove');
-            }
+	
+        var d = 400;
+        var bar = (x < d || y < d || x > 500 - d || y > 500 - d);
+	
+        if (bar) {
+            ctx.lineTo(x, y);
+            ctx.strokeStyle = $scope.color;
+            ctx.stroke();
+        } else {
+            $(this).unbind('mousemove');
+        }
         });
+    
+}).mouseup(function(e) {
+    $(this).unbind('mousemove');
+});
+    
 
-    }).mouseup(function(e) {
-        $(this).unbind('mousemove');
+$cont.find('.butt_col').each(function() {
+    var $t = $(this);
+    var col = splitColor($t.attr('ng-click'));
+    $t.css({
+        'background-color': col
     });
+});
+
+$scope.resetDoodle = function() {
+    ctx.clearRect(0, 0, pad.width, pad.height);
+    $scope.image='';
+};
+
+$scope.saveImage = function() {
+    var url = pad.toDataURL("image/png");
+    $scope.image = url;
+};
     
 
-    $cont.find('.butt_col').each(function() {
-	var $t = $(this);
-	var col = splitColor($t.attr('ng-click'));
-	$t.css({
-            'background-color': col
-	});
-    });
-
-    $scope.resetDoodle = function() {
-	ctx.clearRect(0, 0, pad.width, pad.height);
-	$scope.image='';
-    };
-
-    $scope.saveImage = function() {
-	var url = pad.toDataURL("image/png");
-	$scope.image = url;
-    };
-
-
-    $scope.signupCallback = function(result) {
-	if (!result) {
-	    console.log("Sign up Failed! Username exits.");
-	} else {
-	    $scope.authname = $scope.username;
-	    $scope.username = '';
-	    $scope.password = '';
-	    $scope.isAdmin = true;
-	    console.log("Successfully sign up and log in");//, authData);
-	}
-    };
-
-    $scope.loginCallback = function(result) {
-	if (!result) {
-	    console.log("Log in failed");
-	} else {
-	    $scope.authname = $scope.username;
-	    $scope.isAdmin = true;
-	    $scope.username = '';
-	    $scope.password = '';
-	    console.log("Successfully log in");//, authData);
-	}
-    };
-    
-    
-    $scope.signup = function() {
-	if ($scope.isAdmin) return;
-	RESTfulAPI.signup($scope.username, $scope.password, $scope.signupCallback);
-    };
-
-    $scope.login = function() {
-	if ($scope.isAdmin) return;
-	RESTfulAPI.login($scope.username, $scope.password, $scope.loginCallback);
-    };
-
-    $scope.logout = function() {
-	$scope.isAdmin = false;
+$scope.signupCallback = function(result) {
+    if (!result) {
+	console.log("Sign up Failed! Username exits.");
+    } else {
+	$scope.authname = $scope.username;
 	$scope.username = '';
 	$scope.password = '';
-	$scope.authname = '';
-    };
+	$scope.isAdmin = true;
+	console.log("Successfully sign up and log in");//, authData);
+    }
+};
 
+$scope.loginCallback = function(result) {
+    if (!result) {
+	console.log("Log in failed");
+    } else {
+	$scope.authname = $scope.username;
+	$scope.isAdmin = true;
+	$scope.username = '';
+	$scope.password = '';
+	console.log("Successfully log in");//, authData);
+    }
+};
+    
+    
+$scope.signup = function() {
+    if ($scope.isAdmin) return;
+    RESTfulAPI.signup($scope.username, $scope.password, $scope.signupCallback);
+};
+
+$scope.login = function() {
+    if ($scope.isAdmin) return;
+    RESTfulAPI.login($scope.username, $scope.password, $scope.loginCallback);
+};
+
+$scope.logout = function() {
+    $scope.isAdmin = false;
+    $scope.username = '';
+    $scope.password = '';
+    $scope.authname = '';
+};
+    
 }]);
