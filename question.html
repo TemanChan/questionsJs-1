@@ -14,7 +14,7 @@
 	<meta http-equiv="pragma" content="no-cache" />
 
 	<title>uAsk: {{roomId}}</title>
-
+	<link rel="shortcut icon" type="image/x-icon" href="./img/uask.ico" media="screen" /> 
 	<script src="js/lib/prefixfree.min.js"></script>
 	<script src="js/lib/modernizr.js"></script>
 	<script src="js/lib/jquery.min.js"></script>
@@ -23,15 +23,15 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 
 	<!-- need this for comlted ones. TODO: can I do this in bootstrap -->
-	<link rel="stylesheet" href="css/doodle.css">
+	<link rel="stylesheet" href="./css/doodle.css">
 	<link rel="stylesheet" href="./css/main.css">
 </head>
-<body>
-  <div class = "jumbotron" style="background-color:#C6E2FF; padding-bottom:10px; margin-bottom:10px; border-bottom:2px #efefef solid;">
+<body style="background-color:#fcfefe;">
+  <div class = "jumbotron" style="background-color:#C6E2FF; padding-bottom:10px; margin-bottom:10px; border-bottom:7px #142f70 solid; background-image:url('./img/star.jpg')">
     <div class = "container">
       <div class = "row">
 	<div class = "col-md-10">
-	<font size="10" style="font-family:Arial,Helvetica,sans-serif;">Questions for <font face="Comic sans MS" style="color:#1E90FF">{{roomId}}?</font></font>&nbsp;
+	<font size="10" style="color:#efefef;font-family:Helvatica,Arial,sans-serif;">Questions for <font face="Comic sans MS" style="color:#3f95f0">{{roomId}}?</font></font>&nbsp;
 
 	<!--
 
@@ -45,19 +45,19 @@
       <div class = "row">
 	<div class = "col-md-10">
 	  <!-- small>Share room url: {{absurl}}</small !-->
-	  <span><em>{{welcomeMsg}}</em></span>
+	  <font size="4" color="#efefef"><em>{{welcomeMsg}}</em></font>
 	</div>
       </div>
       
       <div class = "row">
 	<div class = "col-md-10">
 	<div ng-show="isAdmin" style="float:left;" class="pull-left">
-	  <span><em>Incognito Mode is <a ng-click="incognito=!incognito">{{(incognito)?"on":"off"}}</a></em></span>
+	  <font size="3" color="#efefef"><em>Incognito Mode is <a ng-click="incognito=!incognito">{{(incognito)?"on":"off"}}</a></em></font>
 	</div>
 	</div>
 	<div class = "pull-right">
 	  <a class="btn btn-default" href="./index.html">Main</a>
-	  <button type="button" class="btn btn-primary left" data-toggle="modal" data-target="#logIn" ng-hide="isAdmin">
+	  <button type="button" class="btn btn-info left" data-toggle="modal" data-target="#logIn" ng-hide="isAdmin">
 	    Sign In
 	  </button>
 
@@ -98,7 +98,7 @@
 
 	  <!-- after login -->
 	  <!-- img ng-show="$authData" src="https://graph.facebook.com/{{$authData.facebook.id}}/picture/?type=square&return_ssl_resources=1" alt="{{name}}" /-->
-	  <button ng-show="isAdmin" class="btn btn-primary left" type="button" ng-click="logout()">Log out</button>
+	  <button ng-show="isAdmin" class="btn btn-info left" type="button" ng-click="logout()">Log out</button>
 	</div>
       </div>
     </div>
@@ -116,18 +116,20 @@
 		    ng-model="input.wholeMsg" autofocus></textarea>
 	</div>
 	<div class = "col-md-1">
-	  <button class="btn btn-info" type="button" ng-click="addTodo()">Ask</button>
+	  <button class="btn btn-primary" type="button" ng-click="addTodo()">uAsk</button>
 	  <div>
 	    <a data-toggle="collapse" data-target="#filter_list"><span class="glyphicon glyphicon-search"></span>Filters</a>
 	  </div>
 	</div>
 	<div>
-	  <img ng-show="image!=''" src="{{image}}" />
-	  <br />
-	  <!-- Button trigger modal -->
-	  <button type="button" class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#doodle">
-	    Doodle It!
-	  </button>
+	  <div class="col-md-12">
+	    <img ng-show="image!=''" src="{{image}}" />
+	    <br />
+	    <!-- Button trigger modal -->
+	    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#doodle">
+	      Doodle It!
+	    </button>
+	  </div>
 	  
 	  <!-- Modal -->
 	  <div class="modal fade" id="doodle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -139,29 +141,14 @@
 		</div>
 		<div class="modal-body">
 		  <main>
-		    <!--
-		    <div class='contr_canv'>
-		      <h1>DoodleIt</h1>
-		      <br /> Canvas width
-		      <br />
-		      <input type='range' min='150' max='1000' ng-model='width' />
-		      <br />
-		      <br /> Canvas height
-		      <br />
-		      <input type='range' min='150' max='700' ng-model='height' />
-		    </div>
-		    !-->
 		    <div class='wrapper'>
 		      <div class='controls'>
+			Color:
 			<div class='contr_col'>
 			  <button class='butt_col' ng-click='color="#51e980"'></button>
 			  <button class='butt_col' ng-click='color="#3b50ce"'></button>
 			  <button class='butt_col' ng-click='color="#F44336"'></button>
 			  <button class='butt_col' ng-click='color="#555"'></button>
-<!--			  <button class='savedoodle'>Save</button>
-			  <div class='theimage'>
-			    <a href='#' download='doodle' target='_blank'>Click here to download image</a>
-			  </div> -->
 			</div>
 			<div class='size'>
 			  Stroke size :
@@ -169,13 +156,14 @@
 			  <input type='range' min='0.3' max='10' ng-model='size' />
 			</div>
 		      </div>
+		      <br /><br />
 
 		      <canvas id='spad' width='{{width}}' height='{{height}}'></canvas>
 
 		    </div>
 		  </main>
 
-		</div>
+		</div> 
 		<div class="modal-footer">
 		  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		  <button type="button" class="btn btn-default" ng-click="resetDoodle()">Reset</button>
@@ -212,7 +200,7 @@
   <div class="container">
     
     <div class="list-group" id="todo-list">
-      <span class="list-group-item" ng-repeat="todo in todos | filter:input | questionFilter:maxQuestion | trfilter:trInput.from.value:trInput.to.value" ng-class="{completed: todo.completed, editing: todo == editedTodo}" style="margin-bottom:15px; border-width:2px;">
+      <span class="list-group-item" ng-repeat="todo in todos | filter:input | questionFilter:maxQuestion | trfilter:trInput.from.value:trInput.to.value" ng-class="{completed: todo.completed, editing: todo == editedTodo}" style="margin-bottom:15px; border-width:2px 3px 3px 2px; border-style:outset; border-color:#3f95f0;">
 
 	<h4 class="list-group-item-heading" ng-switch on="todo.headLastChar">
 	  <span class="label label-danger" ng-show="todo.new">New</span>
@@ -228,7 +216,7 @@
 	       <span ng-repeat="msg in todo.displayMsg" ng-bind-html="msg" style="display:inline-block" ng-click="editInput(msg)"></span><br />
 	       !-->
 	  <span ng-bind-html="trustHtml(todo.preMsg)"></span>
-	  <img src="{{todo.image}}"/>
+	  <img ng-show="todo.image!=''" src="{{todo.image}}"/>
 	  <div>
 	    <a href ng-repeat="tag in todo.tags track by $index" ng-click="input.wholeMsg=tag">{{tag}} </a>
 	    <small style="display:block; color:#848484 margin-left:1px;"><em>created: {{todo.dateString}} by <a ng-click="reply_to(todo,todo)">{{(todo.anonymous)?"Anonymous":todo.username}}</a>{{(isAdmin && authname==todo.username)?" (me)":""}}</em></small>

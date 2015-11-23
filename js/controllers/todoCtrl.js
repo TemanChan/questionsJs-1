@@ -178,7 +178,7 @@ $scope.trOptions = [
 
 //getPreMsg transfer the string into preMsg to aviod XSS
 $scope.getPreMsg = function($string) {
-    var preMsg = "<pre>";
+    var preMsg = "<pre style=\"background-color:white; border:none;\">";
     for (var i = 0; i < $string.length; ++i) {
 	var ch = $string.charAt(i);
 	if (ch == '<') {
