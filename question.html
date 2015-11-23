@@ -228,7 +228,7 @@
 			<button class="btn btn-outline btn-success btn-xs glyphicon glyphicon-comment" data-toggle="collapse" data-target="#reply-form{{ $index + 1}}" ng-show="isAdmin">&nbsp &nbspReply</button>
 			<button ng-show="0" class="btn btn-default btn-xs glyphicon glyphicon-check" ng-click="toggleCompleted(todo)">Toggle Completed</button>
 			&nbsp;
-			<button ng-show="isAdmin && authname==todo.username" class="btn btn-default btn-xs glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeTodo(todo)">Delete</button>
+			<button ng-show="isAdmin && authname==todo.username" class="btn btn-outline btn-warning btn-xs glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeTodo(todo)">Delete</button>
 			<hr style="margin-top:5px;margin-bottom:5px">
 			
 			<div class="reply">
