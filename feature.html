@@ -10,14 +10,32 @@
 	<link rel="icon" href="../../favicon.ico">
 
 	<title>uAsk: Features</title>
-
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:800italic' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+<script  type="text/javascript">
+$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
+	});
+</script>
 	<!-- Custom styles for this template -->
 	<link href="css/feature.css" rel="stylesheet">
+	<script  type="text/javascript">
+		function changeImg(imgNumber)	{
+			var myImages = ["./img/inte0.jpg", "./img/inte1.jpg", "./img/inte2.jpg"]; 
+			var imgShown = document.body.style.backgroundImage;
+			var newImgNumber =Math.floor(Math.random()*myImages.length);
+			document.body.style.backgroundImage = 'url('+myImages[newImgNumber]+')';
+		}
+		window.onload=changeImg;
+	</script>
 </head>
-<body ng-controller="controller">
+<body ng-controller="controller" class="bg">
+	<div class="se-pre-con"></div>
 	<div class="site-wrapper">
 		<div class="site-wrapper-inner">
 			<div class="cover-container">
@@ -34,8 +52,7 @@
 						</nav>
 					</div>
 				</div>
-
-							<ul class="nav masthead-nav feature-nav">
+							<ul class="nav masthead-nav1">
 							  <li><a href="#intro">Intro</a></li>
 							  <li><a href="#ask">Ask</a></li>
 							  <li><a href="#reply">Reply</a></li>
@@ -77,6 +94,12 @@
 					<a href="#">Top</a>
 				      </div>
 				</div>
+
+				<div class="mastfoot">
+							<div class="inner">
+								<p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+							</div>
+						</div>
 				
 			</div>
 			

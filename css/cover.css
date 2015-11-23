@@ -7,28 +7,41 @@ a,
 a:focus,
 a:hover {
   color: #fff;
+  border-bottom-color: #FFF;
 }
 
 /* Custom default button */
 .btn-default,
-.btn-default:hover,
-.btn-default:focus {
-  color: #333;
+.btn-default:focus, .btn-default:hover{
+  color: #40E0D0;
   text-shadow: none; /* Prevent inheritence from `body` */
-  background-color: #fff;
-  border: 1px solid #fff;
+  background: none;
+  border: 2px solid #40E0D0;
 }
-
 
 /*
  * Base structure
  */
-
-html,
-body {
+.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
   height: 100%;
-  background-color: #333;
+  z-index: 9999;
+  background: url(../gif-load.gif) center no-repeat #000;
 }
+html,body{
+  background: no-repeat center center fixed;
+  height: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 body {
   color: #fff;
   text-align: center;
@@ -85,14 +98,12 @@ body {
 .masthead-nav > li > a:hover,
 .masthead-nav > li > a:focus {
   background-color: transparent;
-  border-bottom-color: #a9a9a9;
-  border-bottom-color: rgba(255,255,255,.25);
+  color: #fff;
 }
 .masthead-nav > .active > a,
 .masthead-nav > .active > a:hover,
 .masthead-nav > .active > a:focus {
   color: #fff;
-  border-bottom-color: #fff;
 }
 
 @media (min-width: 768px) {
@@ -108,15 +119,35 @@ body {
 /*
  * Cover
  */
-
+ .navbar-form {
+  box-shadow: none;
+ }
+ h3 {
+  font-family: 'Cookie', cursive;
+ }
+.cover h1 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 800;
+}
 .cover {
   padding: 0 20px;
+  font-family:  Helvetica;
 }
-.cover .btn-lg {
-  padding: 10px 20px;
+.cover .btn-sm {
+border-radius: 15px;
   font-weight: bold;
 }
-
+.alert {
+  text-shadow: none;
+  background-image: none;
+  box-shadow:none;
+  border:none;
+  }
+.alert-warning {
+  background-color:transparent;
+  text-align: center;
+  color: #87CEEB;
+}
 
 /*
  * Footer
