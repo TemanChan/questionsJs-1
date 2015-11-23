@@ -539,7 +539,7 @@ $scope.loginCallback = function(result) {
 	$scope.welcomeMsg = "Wrong username or password!";
     } else {
 	$scope.authname = $scope.username;
-	$scope.welcomeMsg = "Welcome, "+$scope.username+"! ";
+	$scope.welcomeMsg = "Welcome, "+$scope.username+"!";
 	$scope.isAdmin = true;
 	$scope.username = '';
 	$scope.password = '';
