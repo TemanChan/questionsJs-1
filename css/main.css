@@ -38,6 +38,55 @@
 }
 
 #logIn .form-control {
-	      margin-bottom: 15px;      
+    margin-bottom: 15px;      
 }
 
+
+.btn-outline {
+    background-color: white;
+    background-image: none;
+    color:inherit;
+}
+
+.btn-outline .btn-primary {
+    border: 2px solid #428bca;
+    color: #428bca;
+}
+
+.btn-outline.btn-success  {
+    border: 2px solid #5cb85c;
+    color: #5cb85c;
+}
+
+.btn-outline.btn-info{
+    border: 2px solid #5bc0de;
+    color: #5bc0de;
+}
+
+ .btn-outline .btn-warning {
+    border: 2px solid #f0ad4e;
+    color: #f0ad4e;
+}
+
+.btn-danger .btn-outline {
+    border: 2px solid #d9534f;
+    color: #d9534f;
+}
+
+.btn-outline.btn-primary :hover,
+.btn-outline.btn-success :hover,
+.btn-outline.btn-info :hover,
+.btn-outline.btn-warning :hover,
+.btn-outline.btn-danger :hover,{
+    color: #fff;
+}
+
+.btn-primary[disabled],
+.btn-success[disabled],
+.btn-info[disabled],
+.btn-warning[disabled],
+.btn-danger[disabled]{
+    background-color: white;
+    background-image: none;    
+    color: #aaaaaa;
+}

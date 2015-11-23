@@ -223,8 +223,8 @@
 	  </div>
 	</p>
 
-	                <button class="btn btn-default btn-xs glyphicon glyphicon-hand-up" ng-click="addEcho(todo)" ng-disabled="$storage[todo._id]">{{todo.echo}} &nbspLikes</button>
-			<button class="btn btn-default btn-xs glyphicon glyphicon-hand-down" ng-click="addHate(todo)" ng-disabled="$storage[todo._id]">{{todo.hate}} Dislikes</button>
+	                <button class="btn btn-outline btn-danger btn-xs glyphicon glyphicon-hand-up" ng-click="addEcho(todo)" ng-disabled="$storage[todo._id]" ng-class="{'ngdisable':$storage[todo._id]}">{{todo.echo}} &nbspLikes</button>
+			<button class="btn btn-primary btn-xs glyphicon glyphicon-hand-down btn-outline" ng-click="addHate(todo)" ng-disabled="$storage[todo._id]" ng-class="{'ngdisable':$storage[todo._id]}">{{todo.hate}} Dislikes</button>
 			<button ng-show="isAdmin" class="btn btn-default btn-xs glyphicon glyphicon glyphicon-comment" data-toggle="collapse" data-target="#reply-form{{ $index + 1}}">&nbspReply</button>
 			<button ng-show="isAdmin" class="btn btn-default btn-xs glyphicon glyphicon-check" ng-click="toggleCompleted(todo)">Toggle Completed</button>
 			&nbsp;
@@ -293,7 +293,6 @@
 <script src="js/directives/todoEscape.js"></script>
 <script src="js/services/RESTfulAPI.js"></script>
 <script src="js/lib/socket.min.js"></script>
-<script src="js/controllers/doodle.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular-resource.min.js"></script>
 <!-- older version of socket.io
 <script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
