@@ -64,7 +64,7 @@ $scope.image = '';
     $scope.isAdmin = false;
 //authname will denote the name of the current user
     $scope.authname = '';
-    
+    $scope.welcomeMsg = "Sign in for more functionalities!";
 $scope.input = {wholeMsg : ''};
 $scope.editedTodo = null;
 //incognito is true if the user is in incognito mode
@@ -522,8 +522,10 @@ $scope.saveImage = function() {
 $scope.signupCallback = function(result) {
     if (!result) {
 	console.log("Sign up Failed! Username exits.");
+	$scope.welcomeMsg = "Sorry, username "+$scope.username+" is already used.";
     } else {
 	$scope.authname = $scope.username;
+	$scope.welcomeMsg = "Welcome, "+$scope.username+"! ";
 	$scope.username = '';
 	$scope.password = '';
 	$scope.isAdmin = true;
@@ -534,8 +536,10 @@ $scope.signupCallback = function(result) {
 $scope.loginCallback = function(result) {
     if (!result) {
 	console.log("Log in failed");
+	$scope.welcomeMsg = "Wrong username or password!";
     } else {
 	$scope.authname = $scope.username;
+	$scope.welcomeMsg = "Welcome, "+$scope.username+"! ";
 	$scope.isAdmin = true;
 	$scope.username = '';
 	$scope.password = '';
@@ -559,6 +563,7 @@ $scope.logout = function() {
     $scope.username = '';
     $scope.password = '';
     $scope.authname = '';
+    $scope.welcomeMsg = "Sign in for more functionalities!";
 };
     
 }]);

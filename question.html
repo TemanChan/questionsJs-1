@@ -44,19 +44,19 @@
       </div>
       <div class = "row">
 	<div class = "col-md-10">
-	  <small>Share room url: {{absurl}}</small> &nbsp;
+	  <!-- small>Share room url: {{absurl}}</small !-->
+	  <span><em>{{welcomeMsg}}</em></span>
 	</div>
       </div>
       
       <div class = "row">
+	<div class = "col-md-10">
 	<div ng-show="isAdmin" style="float:left;" class="pull-left">
-	  <span><em>&nbsp&nbsp&nbsp&nbsp&nbspWelcome, {{authname}}!</em></span>
 	  <span><em>Incognito Mode is <a ng-click="incognito=!incognito">{{(incognito)?"on":"off"}}</a></em></span>
+	</div>
 	</div>
 	<div class = "pull-right">
 	  <a class="btn btn-default" href="./index.html">Main</a>
-	  <!-- button ng-hide="$authData" class="btn btn-primary left" type="button" ng-click="FBLogin()">Want Admin? Sign in with Facebook</button -->
-
 	  <button type="button" class="btn btn-primary left" data-toggle="modal" data-target="#logIn" ng-hide="isAdmin">
 	    Sign In
 	  </button>
@@ -82,7 +82,7 @@
 			    Log in</button>
 			  <label class="checkbox pull-left">
 			    <input type="checkbox" value="remember-me">
-			    Remember me
+			    Forget me
 			  </label>
 			</form>
 		      </div>
@@ -122,7 +122,7 @@
 	  </div>
 	</div>
 	<div>
-	  <img src="{{image}}" />
+	  <img ng-show="image!=''" src="{{image}}" />
 	  <br />
 	  <!-- Button trigger modal -->
 	  <button type="button" class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#doodle">
