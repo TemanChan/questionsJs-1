@@ -174,7 +174,7 @@ describe('TodoCtrl', function() {
           $window: window
         });
 
-	    expect(scope.getPreMsg('<em>\"#test\"</em>')).toBe('<pre>&lt;em&gt;&quot;<strong>#test</strong>&quot;&lt;/em&gt;</pre>');
+	    expect(scope.getPreMsg('<em>\"#test\"</em>')).toBe('<pre style="background-color:white; border:none;">&lt;em&gt;&quot;<strong>#test</strong>&quot;&lt;/em&gt;</pre>');
 	  
       });
 
@@ -397,8 +397,10 @@ describe('TodoCtrl', function() {
 
 	  scope.loginCallback(false);
 	  expect(scope.isAdmin).toBe(false);
+	  scope.username="Peter";
 	  scope.loginCallback(true);
 	  expect(scope.isAdmin).toBe(true);
+	  expect(scope.welcomeMsg).toBe("Welcome, Peter!");
 			   
       });
 

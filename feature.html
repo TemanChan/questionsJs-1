@@ -10,14 +10,33 @@
 	<link rel="icon" href="../../favicon.ico">
 
 	<title>uAsk: Features</title>
-
+	<link rel="shortcut icon" type="image/x-icon" href="./img/uask.ico" media="screen" /> 
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:800italic' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+<script  type="text/javascript">
+$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");;
+	});
+</script>
 	<!-- Custom styles for this template -->
 	<link href="css/feature.css" rel="stylesheet">
+	<script  type="text/javascript">
+		function changeImg(imgNumber)	{
+			var myImages = ["./img/inte0.jpg", "./img/inte1.jpg", "./img/inte2.jpg"]; 
+			var imgShown = document.body.style.backgroundImage;
+			var newImgNumber =Math.floor(Math.random()*myImages.length);
+			document.body.style.backgroundImage = 'url('+myImages[newImgNumber]+')';
+		}
+		window.onload=changeImg;
+	</script>
 </head>
-<body ng-controller="controller">
+<body ng-controller="controller" class="bg">
+	<div class="se-pre-con"></div>
 	<div class="site-wrapper">
 		<div class="site-wrapper-inner">
 			<div class="cover-container">
@@ -34,13 +53,16 @@
 						</nav>
 					</div>
 				</div>
-
-							<ul class="nav masthead-nav feature-nav">
+							<ul class="nav masthead-nav1">
 							  <li><a href="#intro">Intro</a></li>
 							  <li><a href="#ask">Ask</a></li>
 							  <li><a href="#reply">Reply</a></li>
 							  <li><a href="#hashtag">Hashtag</a></li>
 							  <li><a href="#filter">Filter</a></li>
+							  <br />
+							  <li><a href="#doodle">Doodle</a></li>
+							  <li><a href="#user">User system</a></li>
+							  <li><a href="#incognito">Incognito mode</a></li>
 							</ul>
 
 				
@@ -76,7 +98,35 @@
 					<img class="show" src="img/filter.png" width="680" height="164">
 					<a href="#">Top</a>
 				      </div>
+
+				      <div class="jumbotron text-center" id="doodle">
+					<h1>Let's doodle it!</h1>
+					<p>Draw anything you want in the area, and get it post with your question.</p>
+					<img class="show" src="img/doodle.jpg" width="680">
+					<a href="#">Top</a>
+				      </div>
+
+				      <div class="jumbotron text-center" id="user">
+					<h1>Get Admin.</h1>
+					<p>Spend 5 seconds signing up, you get more functionalities.</p>
+					<img class="show" src="img/user.jpg" width="680">
+					<a href="#">Top</a>
+				      </div>
+
+				      <div class="jumbotron text-center" id="incognito">
+					<h1>Hide yourself with thie incognito mode.</h1>
+					<p>The incognito mode avoids others to recognize you.</p>
+					<img class="show" src="img/incognito.jpg" width="680" >
+					<a href="#">Top</a>
+				      </div>
+
 				</div>
+
+				<div class="mastfoot">
+							<div class="inner">
+								<p><a href="https://github.com/COMP3111H-gghf">GGWP</a>@2015</p>
+							</div>
+						</div>
 				
 			</div>
 			

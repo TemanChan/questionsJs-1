@@ -1,19 +1,21 @@
 @import url(http://fonts.googleapis.com/css?family=Lato);
-.modal {
+body {
     margin: 0;
     padding: 0;
+    background-color: white;
 }
-.modal * {
+* {
     font-family: Helvetica, sans-serif;
+    color: #888;
     box-sizing: border-box;
 }
-.modal canvas#spad {
+canvas#spad {
     background-color: #fff;
     border: 2px solid #888;
     padding: 0;
     border-radius: 10px;
 }
-.modal .contr_canv {
+.contr_canv {
     position: fixed;
     top: 0;
     left: 0;
@@ -28,29 +30,28 @@
     -o-box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
     -ms-box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
 }
-#doodle .wrapper {
+.wrapper {
     text-align: center;
 }
-#doodle .controls {
+.controls {
     text-align: center;
-
+    margin-top: 60px;
 }
-#doodle .contr_col {
-    width: 99%;
+.contr_col {
+    width: 100%;
     background-color: #fff;
     padding: 5px;
-    position: relative;
+    position: fixed;
     top: 0;
-    left: 8px;
+    left: 0;
     z-index: 5;
     box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
     -o-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
     -ms-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
-
 }
-#doodle .contr_col button.butt_col {
+.contr_col button.butt_col {
     display: inline-block;
     padding: 0;
     background-color: #f44336;
@@ -71,14 +72,14 @@
     -o-transition: all 0.3s ease-in-out;
     -ms-transition: all 0.3s ease-in-out;
 }
-#doodle .contr_col button.butt_col:hover {
+.contr_col button.butt_col:hover {
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
     -webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
     -moz-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
     -o-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
     -ms-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.6);
 }
-#doodle .contr_col button.savedoodle {
+.contr_col button.saveshit {
     position: absolute;
     right: 30px;
     top: 10px;
@@ -91,11 +92,11 @@
     cursor: pointer;
     font-weight: bold;
 }
-#doodle .contr_col button.savedoodle:hover {
+.contr_col button.saveshit:hover {
     background-color: transparent;
     color: #3b50ce;
 }
-#doodle .contr_col .theimage {
+.contr_col .theimage {
     position: absolute;
     background-color: #fff;
     padding: 30px;
@@ -110,7 +111,7 @@
     -o-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
     -ms-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
 }
-#doodle .contr_col .theimage::after {
+.contr_col .theimage::after {
     content: " ";
     width: 0;
     height: 0;
